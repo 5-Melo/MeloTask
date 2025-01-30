@@ -1,10 +1,10 @@
-import React from 'react';
-
-
+import React from "react";
 
 function App() {
   return (
-    <h1>Hello</h1>
+    <div>
+      <h1>hello</h1>
+    </div>
   );
 }
 
