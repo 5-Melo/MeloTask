@@ -1,0 +1,166 @@
+.landing {
+    position: relative;
+    height: 100vh;
+    background-color: #FDEBEB;
+  }
+  
+  .landing__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .landing__logo {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .landing__nav {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .landing__navItem {
+    margin-left: 60px;
+    font-size: 22px;
+    text-decoration: none;
+    color: #2e2e2e;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .landing__navItem::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    width: 0;
+    height: 2px;
+    background-color: #2e2e2e;
+    left: 0;
+    border-radius: 1px;
+    transition: all 0.4s;
+  }
+  
+  .landing__navItem:not(.landing__navItemHighlight):hover::after {
+    width: 100%;
+  }
+  
+  .landing__navItemHighlight {
+    background-color: #2e2e2e;
+    color: #FDEBEB;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    transition: all 0.4s;
+  }
+  
+  .landing__navItemHighlight:hover {
+    background-color: #4e4e4e;
+  }
+  
+  .landing__vector {
+    position: absolute;
+    opacity: 0.25;
+    width: 50%;
+  }
+  
+  .landing__vectorRight {
+    bottom: 0;
+    right: 0;
+    width: 600px;
+  }
+  
+  .landing__vectorLeft {
+    width: 320px;
+  }
+  
+  .landing__content {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    width: 95%;
+  }
+  
+  .landing__text {
+    margin: 0 80px;
+  }
+  
+  .landing__headline {
+    font-size: 72px;
+    font-weight: bold;
+    color: #2e2e2e;
+  }
+  
+  .landing__description {
+    font-size: 28px;
+    width: 75%;
+    color: #2e2e2e;
+  }
+  
+  .landing__image {
+    display: flex;
+  }
+  
+  .landing__illustration {
+    max-width: 600px;
+    height: auto;
+  }
+  
+  
+  @media (max-width: 1024px) {
+    .landing__logo {
+        font-size: 30px;
+    }
+  
+    .landing__nav {
+        align-items: center;
+        padding: 0;
+    }
+  
+    .landing__navItem {
+        margin-left: 40px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+  
+    .landing__vectorRight {
+      display: none;
+    }
+  
+    .landing__vectorLeft {
+        display: none;
+    }
+  
+  
+    .landing__content {
+        flex-direction: column;
+        align-items: center;
+    }
+  
+    .landing__text {
+        margin: 20px 0;
+        text-align: center;
+    }
+  
+    .landing__headline {
+        font-size: 50px;
+    }
+  
+    .landing__description {
+        font-size: 22px;
+        width: 90%;
+        text-align: center;
+    }
+  
+    .landing__illustration {
+        /* display: none; */
+        width: 500px;
+    }
+  }
+  
+  
