@@ -6,8 +6,8 @@ import styles from './signinPage.module.css'
 function SigninPage() {
     return (
         <div className={styles.container}>
-            <Figure parentStyles={styles}/>   
-            <Form parentStyles={styles} />   
+            <Figure parentStyles={styles}/>
+            <Form parentStyles={styles} />
         </div>
     );
 }

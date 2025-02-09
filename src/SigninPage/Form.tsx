@@ -8,7 +8,7 @@ interface props {
 }
 
 
-function Form({ parentStyles } : props) { 
+function Form({ parentStyles } : props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [checkbox, setChekbox] = useState(false);
@@ -20,8 +20,6 @@ function Form({ parentStyles } : props) {
         console.log(email);
         console.log(password);
         console.log(checkbox);
-        
-        
     }
     function handleInput(e)
     {
@@ -36,7 +34,7 @@ function Form({ parentStyles } : props) {
             console.log("setting password")
             setPassword(e.target.value)
         }
-        else 
+        else
         {
             console.log("setting checkbox")
             setChekbox(e.target.checked);
@@ -59,7 +57,7 @@ function Form({ parentStyles } : props) {
                 </div>
                 <div className={styles.submit}>
                     <input type="submit" value="Sign In" />
-                    <p>don't have an account <a href="">Sing Up</a></p>
+                    <p>don't have an account <a href="#">Sing Up</a></p>
                 </div>
             </form>
         </div>
