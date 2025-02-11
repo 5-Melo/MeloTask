@@ -2,10 +2,11 @@ import React from 'react';
 import styles from './figure.module.css'
 
 interface props {
-    parentStyles: object;
+    parentStyles: {figure: string};
 }
-function Figure({parentStyles} : props) {
-    return (
+
+const Figure: React.FC<props> = ({ parentStyles }) => {
+return (
         <div className={`${styles.container} ${parentStyles.figure}`}>
             <div className={styles.heading}>
                 <h2>hey There!</h2>

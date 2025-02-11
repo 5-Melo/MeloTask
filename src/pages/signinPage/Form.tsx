@@ -1,17 +1,19 @@
 import React from 'react';
 import styles from './form.module.css'
 import { useState } from 'react'
+// import {Link} from 'react-router-dom'
+
 
 interface props {
-    parentStyles : object;
+    parentStyles : {form: string};
 
 }
 
 
-function Form({ parentStyles } : props) {
+const Form: React.FC<props> = ({ parentStyles }) => {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [checkbox, setChekbox] = useState(false);
+    const [password, setPassword] = useState<string>('');
+    const [checkbox, setCheckbox] = useState<string>(false);
 
     function handleClick(e)
     {
@@ -24,12 +26,12 @@ function Form({ parentStyles } : props) {
     function handleInput(e)
     {
         const type : string = e.target.type
-        if (type == "email")
+        if (type === "email")
         {
             console.log("Setting Email");
             setEmail(e.target.value)
         }
-        else if (type == "password")
+        else if (type === "password")
         {
             console.log("setting password")
             setPassword(e.target.value)
@@ -37,7 +39,7 @@ function Form({ parentStyles } : props) {
         else
         {
             console.log("setting checkbox")
-            setChekbox(e.target.checked);
+            setCheckbox(e.target.checked);
         }
     }
     return (
@@ -46,7 +48,7 @@ function Form({ parentStyles } : props) {
                 <h1>Sign In</h1>
                 <p>"enter, access, achieve"</p>
             </div>
-            <form onSubmit={handleClick}>
+            <form className={styles.form} onSubmit={handleClick}>
                 <div className={styles.fields}>
                     <input onChange={handleInput} type="email" placeholder="Email Address" name="email" id="email" autoComplete="username" />
                     <input onChange={handleInput} type="password" placeholder="Password" name="password" id="password" autoComplete="current-password" />
@@ -57,7 +59,7 @@ function Form({ parentStyles } : props) {
                 </div>
                 <div className={styles.submit}>
                     <input type="submit" value="Sign In" />
-                    <p>don't have an account <a href="#">Sing Up</a></p>
+                    <p>don't have an account <a href="/signup">Sing Up</a></p>
                 </div>
             </form>
         </div>
