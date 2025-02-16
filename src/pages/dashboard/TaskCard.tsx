@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect , useRef} from 'react'
 import styles from './taskCard.module.css'
 import { RxAvatar } from "react-icons/rx";
 
@@ -11,11 +11,11 @@ interface props {
 }
 
 
-const TaskCard: React.FC<props> = ({ task, deleteTask }) => {
-
+const TaskCard: React.FC<props> = ({ task}) => {
+  
 
   return (
-    <li className={styles.container} draggable onDrag={deleteTask}>
+    <li className={styles.container} draggable >
       <div className={styles.upperSection}>
         <p className={`${styles.priority} ${task.priority === 'low'? styles.lowP: task.priority === 'high'? styles.highP: styles.mediumP}`}>{task.priority}</p>
           <button className={styles.button}>...</button>

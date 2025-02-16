@@ -12,6 +12,7 @@
 }
 .taskList {
     list-style: none;
+    position:relative
 }
 .upperSection__heading {
 align-self: flex-start;

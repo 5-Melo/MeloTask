@@ -1,5 +1,6 @@
 .container {
     width: 350px;
+    height: 175px;
     background-color: white;
     border-radius: 1rem;
     display:flex;
@@ -9,6 +10,9 @@
     position: relative;
     cursor: grab;
     user-select:none;
+    transition: 1s all;
+    transform: translateY();
+    
 }
 .container:active{
     cursor:grabbing;
