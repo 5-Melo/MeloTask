@@ -31,21 +31,26 @@
     display:flex;
     flex-direction: column;
     gap: 3rem;
+    align-items: flex-start;
 }
 .fields input{
     border-color:transparent;
     background-color: transparent;
     border-bottom: .1rem #DFDBEE solid;
+    font-size: 1rem;
 }
 
 .fields input:focus {
     outline-width: 0;
 }
+.form__password__toggleButton {
+    padding: .5rem;
+}
 
 .checkbox {
     display: flex;
     align-items: center;
-    font-size: 1.5rem;;
+    font-size: 1rem;;
 }
 .checkbox input[type="checkbox"] {
     color: red;

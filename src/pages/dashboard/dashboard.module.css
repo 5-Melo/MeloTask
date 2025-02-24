@@ -1,5 +1,6 @@
 .container {
     display: flex;
-    gap: 3rem;
-    height: 100vh;
+    gap: 2rem;
+    flex-wrap: wrap;
+    user-select: none;
 }

@@ -18,10 +18,14 @@ const TaskCard: React.FC<props> = ({ task}) => {
     <li className={styles.container} draggable >
       <div className={styles.upperSection}>
         <p className={`${styles.priority} ${task.priority === 'low'? styles.lowP: task.priority === 'high'? styles.highP: styles.mediumP}`}>{task.priority}</p>
-          <button className={styles.button}>...</button>
           <ul className={styles.dotList}>
-            <li>edit</li>
-            <li>delete</li>
+            <div className={styles.dotListDiv}>
+            <li><button>edit</button></li>
+            <li><button>delete</button></li>
+            </div>
+            <div className={styles.buttonDiv}>
+             <button className={styles.button}>...</button>
+          </div>
           </ul>
       </div>
       <div className={styles.middleSection}>

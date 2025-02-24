@@ -14,6 +14,7 @@ const Form: React.FC<props> = ({ parentStyles }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState<string>('');
     const [checkbox, setCheckbox] = useState<string>(false);
+    const [passwordField,setPasswordField] = useState('password');
 
     function handleClick(e)
     {
@@ -42,6 +43,10 @@ const Form: React.FC<props> = ({ parentStyles }) => {
             setCheckbox(e.target.checked);
         }
     }
+    function togglePassword(e)
+    {
+        setPasswordField(passwordField === 'password'? 'text':'password');
+    }
     return (
         <div className={`${styles.container} ${parentStyles.form}`}>
             <div className={styles.heading}>
@@ -51,7 +56,10 @@ const Form: React.FC<props> = ({ parentStyles }) => {
             <form className={styles.form} onSubmit={handleClick}>
                 <div className={styles.fields}>
                     <input onChange={handleInput} type="email" placeholder="Email Address" name="email" id="email" autoComplete="username" />
-                    <input onChange={handleInput} type="password" placeholder="Password" name="password" id="password" autoComplete="current-password" />
+                    <div className={styles.form__password}>
+                        <input onChange={handleInput} type={passwordField} placeholder="Password" name="password" id="password" autoComplete="current-password" />
+                        <button className={styles.form__password__toggleButton} onClick={togglePassword}>Toggle</button>
+                    </div>
                     <div className={styles.checkbox}>
                         <input onChange={handleInput} type="checkbox" name="remember" id="remember" />
                         <label htmlFor="remember">Remember me</label>

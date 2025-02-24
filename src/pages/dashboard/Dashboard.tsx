@@ -62,14 +62,14 @@ function Dashboard() {
 
 
     Array.from(allLi).forEach((task) => {
-      task.style.transition = "0s all"
+      task.style.transition = "0.3s opacity"
       task.style.marginTop = '0px'
     })
     let bl = true;
 
     if (!ulOver.contains(draggedTask)) {
       Array.from(ys[ulIdx]).forEach((task, idx) => {
-        if (e.clientY >= task - 90 && e.clientY <= task + 90) {
+        if (e.clientY >= task - 100 && e.clientY <= task + 100) {
           ulOver.insertBefore(draggedTask, ulOver.children[idx])
           console.log(draggedTask);
           bl = false;
@@ -78,7 +78,8 @@ function Dashboard() {
       if (bl) ulOver.appendChild(draggedTask);
     }
 
-
+    console.log(tasks);
+    
 
     
 
@@ -105,9 +106,9 @@ function Dashboard() {
         console.log(ul.children[idx]);
 
         if (e.clientY >= task - 90 && e.clientY <= task + 90) {
-          ul.children[idx].style.transition = "1s all"
+          ul.children[idx].style.transition = "0.3s all"
 
-          ul.children[idx].style.marginTop = '200px'
+          ul.children[idx].style.marginTop = '210px'
         }
         else {
           ul.children[idx].style.marginTop = '0px'

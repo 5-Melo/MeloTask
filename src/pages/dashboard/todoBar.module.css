@@ -1,5 +1,6 @@
 .container {
     width: 400px;
+    height: 70vh;
     background-color: #F5F5F5;
     display:flex;
     flex-direction: column;
@@ -12,7 +13,8 @@
 }
 .taskList {
     list-style: none;
-    position:relative
+    position:relative;
+    overflow-y: scroll;
 }
 .upperSection__heading {
 align-self: flex-start;
