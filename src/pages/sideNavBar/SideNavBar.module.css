@@ -75,7 +75,7 @@
 
 .side-nav__sidebar {
     padding: 80px 50px;
-    min-width: 190px;
+    min-width: 300px;
     background-color: #F38181;
 }
 
@@ -120,6 +120,7 @@
     font-size: 16px;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     color: white;
     transition: all 0.4s;
     cursor: pointer;    
@@ -128,7 +129,8 @@
 .side-nav__nav-item--active{
     background-color: white;
     padding: 8px;
-    border-radius: 50px;    
+    border-radius: 50px;   
+    
     color: #2e2e2e;
 }
 
@@ -136,6 +138,7 @@
     padding: 8px;
     border-radius: 50px;
     background-color: rgba(255, 255, 255, 0.4);
+    
 }
 
 .side-nav__nav-name {

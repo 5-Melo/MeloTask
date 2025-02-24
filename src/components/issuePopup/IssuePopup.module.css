@@ -1,0 +1,112 @@
+/* Block: issue-popup */
+.wrapper{
+    height: 100vh;
+    background-color: rgba(85, 85, 85, 0.44);
+}
+
+.issue-popup {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: auto;
+}
+
+/* Element: issue-popup__header */
+.issue-popup__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Element: issue-popup__header-left */
+.issue-popup__header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Element: issue-popup__back-icon */
+.issue-popup__back-icon {
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Element: issue-popup__project-name */
+.issue-popup__project-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Element: issue-popup__edit-icon */
+.issue-popup__edit-icon {
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Element: issue-popup__labels */
+.issue-popup__labels {
+    margin-bottom: 20px;
+}
+
+/* Element: issue-popup__content */
+.issue-popup__content {
+    margin-bottom: 20px;
+}
+
+/* Element: issue-popup__subtitle */
+.issue-popup__subtitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Element: issue-popup__title */
+.issue-popup__title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Element: issue-popup__description */
+.issue-popup__description {
+    margin-bottom: 20px;
+}
+
+/* Element: issue-popup__description-text */
+.issue-popup__description-text {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+}
+
+
+.issue-popup__details{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+
+.issue-popup__save{
+    background-color: #F38181;
+    border: none;
+    color: white;
+    padding: 5px 15px;
+    font-size: 18px;
+    border-radius: 15px;
+    cursor: pointer;
+}
