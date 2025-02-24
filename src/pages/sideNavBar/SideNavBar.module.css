@@ -2,7 +2,6 @@
 .side-nav{
     background-color: #FDEBEB;
     height:100vh;
-    overflow: hidden;
 }
 .side-nav__header {
     display: flex;
