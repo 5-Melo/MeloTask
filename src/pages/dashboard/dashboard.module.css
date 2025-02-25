@@ -1,6 +1,14 @@
 .container {
     display: flex;
     gap: 2rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     user-select: none;
+    overflow: scroll;
+    width:fit-content;
+    align-items: flex-start;
+    scrollbar-width: none;
+}
+.container::-webkit-scrollbar
+{
+    display: none;
 }

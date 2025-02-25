@@ -1,12 +1,14 @@
+
 .container {
     width: 400px;
-    height: 70vh;
+    max-height: 80vh;
+    padding-bottom:2rem; 
     background-color: #F5F5F5;
     display:flex;
     flex-direction: column;
     align-items: center;
-    /* padding: 2rem 0rem; */
     border-radius: 1rem;
+    transition: 0.5s all;
 }
 .container .taskList > li:not(:last-child){
     margin-bottom: 2rem;
@@ -15,6 +17,12 @@
     list-style: none;
     position:relative;
     overflow-y: scroll;
+    scrollbar-width: none;;
+}
+
+.taskList::-webkit-scrollbar {
+    display: none;
+
 }
 .upperSection__heading {
 align-self: flex-start;
@@ -34,6 +42,14 @@ padding: 1rem ;
 content: '';
 width: .8rem;
 height: .8rem;
-background-color: black;
+background-color: var(--dot-color);
 border-radius: 50%;
+}
+
+.container__collapse__button {
+    background-color: transparent;
+    border-width: 0;
+    cursor: pointer;
+    margin-left: auto;
+    font-size: 2rem;
 }
