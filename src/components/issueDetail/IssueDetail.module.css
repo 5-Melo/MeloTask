@@ -1,0 +1,161 @@
+.issue-detail {
+    display: flex;
+    /* align-items: center; */
+    gap: 40px;
+    
+}
+
+.issue-detail__title {
+    color: #5A5A5A;
+    font-weight: normal;
+    text-wrap: nowrap;
+    margin-top: 10px;
+}
+
+.issue-detail__content {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.issue-detail__avatar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    border: #EBECF2 solid 1px;
+    border-radius: 50px;
+    min-width: fit-content;
+}
+
+.issue-detail__avatar-icon {
+    font-size: 20px;
+    color: #2e2e2e;
+}
+
+.issue-detail__avatar-name {
+    color: #2e2e2e;
+}
+
+.issue-detail__attribute {
+    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: #EBECF2 solid 1px;
+    border-radius: 50px;
+    min-width: fit-content;
+}
+
+.issue-detail__color-indicator {
+    width: 12px;
+    height: 12px;
+    background-color: #2e2e2e;
+    border-radius: 50%;
+}
+
+.issue-detail__attribute-text {
+    color: #2e2e2e;
+    
+}
+
+.issue-detail__add-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.issue-detail__add {
+    background-color: #FDEBEB;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #F38181;
+    cursor: pointer;
+    transition: all 0.4s;
+}
+
+.issue-detail__add:hover{
+    background-color: rgba(243, 129, 129, 0.3);
+}
+
+.issue-detail__add-icon {
+    color: #F38181;
+}
+
+
+.issue-detail__submit{
+    background-color: #F38181;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.4s;
+}
+.issue-detail__submit:hover{
+    background-color: #d87777;
+}
+
+.issue-detail__addFields {
+    display: flex;
+    align-items: center;
+    max-width: 0px; 
+    opacity: 0; 
+    overflow: hidden; 
+    transition: max-width 1s ease-out, opacity 0.8s ease-in; /* Smooth transition */
+    padding: 5px;
+    border: #EBECF2 solid 1px;
+    border-radius: 50px;
+}
+
+.issue-detail__addFields--visible {
+    max-width: 100%; 
+    opacity: 1;
+}
+
+/* Base styles for the color input */
+.color-input {
+    /* Remove default styles */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Set a fixed size */
+    width: 20px;
+    height: 20px;
+
+    /* Remove the border */
+    border: none;
+
+    /* Add a custom border-radius */
+    border-radius: 8px;
+    background-color: transparent;
+
+    /* Add a box-shadow for depth */
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+
+    /* Add a smooth transition for hover/focus effects */
+    transition: box-shadow 0.2s ease-in-out;
+    margin-right: 10px;
+}
+
+
+/* Customize the color preview area */
+.color-input::-webkit-color-swatch {
+    border: none; /* Remove the default border */
+    border-radius: 6px; /* Match the input's border-radius */
+}
+
+.color-input::-moz-color-swatch {
+    border: none; /* Remove the default border */
+    border-radius: 6px; /* Match the input's border-radius */
+}
+
+.issue-detail__name{
+    outline: none;
+    border: none;
+}
