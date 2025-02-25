@@ -27,15 +27,11 @@ function Dashboard() {
 
   function getys() {
     const allULS = dashboard.current.querySelectorAll(`.${styles2.taskList}`)
-    // console.log(allULS);
-
     Array.from(allULS).forEach((ul)=>{
       const tmp = [];
       Array.from(ul.children).forEach((task) => {
-        // console.log(task);
         tmp.push(task.getBoundingClientRect().y)
       })
-      
       ys.push(tmp);
     })
       
@@ -45,22 +41,17 @@ function Dashboard() {
     draggedTask.style.opacity = "50%"
     ys = []
     getys()
-    console.log(ys);
-    
+    // console.log(ys);
   }
 
   function dragEnd(e) {
     const allLi = dashboard.current.querySelectorAll(`.${styles3.container}`);
     let ulIdx;
     draggedTask.style.opacity = "100%"
-
-
     Array.from(dashboard.current.querySelectorAll(`.${styles2.taskList}`)).forEach((list, idx) => {
-      if (list == ulOver)
+      if (list === ulOver)
         ulIdx = idx
     })
-
-
     Array.from(allLi).forEach((task) => {
       task.style.transition = "0.3s opacity"
       task.style.marginTop = '0px'
@@ -68,21 +59,20 @@ function Dashboard() {
     let bl = true;
 
     if (!ulOver.contains(draggedTask)) {
-      Array.from(ys[ulIdx]).forEach((task, idx) => {
-        if (e.clientY >= task - 100 && e.clientY <= task + 100) {
-          ulOver.insertBefore(draggedTask, ulOver.children[idx])
-          console.log(draggedTask);
-          bl = false;
+        Array.from(ys[ulIdx]).forEach((task, idx) => {
+          if (e.clientY >= task - 100 && e.clientY <= task + 100) {
+            ulOver.insertBefore(draggedTask, ulOver.children[idx])
+            ys[ulIdx].splice(idx,0,)
+
+            // console.log(draggedTask);
+            bl = false;
+          }
+        })
+        if(bl) 
+        {
+          ulOver.appendChild(draggedTask);
         }
-      })
-      if (bl) ulOver.appendChild(draggedTask);
     }
-
-    console.log(tasks);
-    
-
-    
-
   }
   function dragOver(e) {
 
@@ -93,7 +83,7 @@ function Dashboard() {
     barOver = bar;
 
     Array.from(dashboard.current.querySelectorAll(`.${styles2.taskList}`)).forEach((list, idx)=>{
-      if(list == ulOver)
+      if(list === ulOver)
         ulIdx = idx
     })
   
@@ -101,19 +91,16 @@ function Dashboard() {
       console.log(ys[ulIdx]);
       
       Array.from(ys[ulIdx]).forEach((task, idx) => {
-        console.log(e.clientY);
-        console.log(idx);
-        console.log(ul.children[idx]);
-
+        // console.log(e.clientY);
+        // console.log(idx);
+        // console.log(ul.children[idx]);
         if (e.clientY >= task - 90 && e.clientY <= task + 90) {
           ul.children[idx].style.transition = "0.3s all"
-
           ul.children[idx].style.marginTop = '210px'
         }
         else {
           ul.children[idx].style.marginTop = '0px'
         }
-
       });
     }
     const allLi = dashboard.current.querySelectorAll(`.${styles3.container}`);
@@ -145,6 +132,18 @@ function Dashboard() {
         color='green'
         dragOver={dragOver}
 
+      />
+      <TodoBar
+        barName='Done'
+        tasks={tasks}
+        color='yellow'
+        dragOver={dragOver}
+      />
+      <TodoBar
+        barName='Done'
+        tasks={tasks}
+        color='yellow'
+        dragOver={dragOver}
       />
       <TodoBar
         barName='Done'
