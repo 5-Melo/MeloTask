@@ -43,8 +43,17 @@
 .fields input:focus {
     outline-width: 0;
 }
+
+.form__password {
+        position: relative;
+}
 .form__password__toggleButton {
-    padding: .5rem;
+    padding: 1rem;
+    background-color: transparent;
+    border: none;
+    right: -10px;
+    font-size: 1.5rem;
+    cursor: pointer;
 }
 
 .checkbox {
@@ -53,10 +62,10 @@
     font-size: 1rem;;
 }
 .checkbox input[type="checkbox"] {
-    color: red;
-    background-color: red;
-    border: 1rem red solid;
-    margin-right: 0.5rem;;
+    width: 15px;
+    height: 15px;
+    margin-right: 0.5rem;
+
 }
 .submit {
     width: 100%;
