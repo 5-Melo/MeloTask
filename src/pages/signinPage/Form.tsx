@@ -1,6 +1,9 @@
 import React from 'react';
 import styles from './form.module.css'
 import { useState } from 'react'
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+
 // import {Link} from 'react-router-dom'
 
 
@@ -58,7 +61,7 @@ const Form: React.FC<props> = ({ parentStyles }) => {
                     <input onChange={handleInput} type="email" placeholder="Email Address" name="email" id="email" autoComplete="username" />
                     <div className={styles.form__password}>
                         <input onChange={handleInput} type={passwordField} placeholder="Password" name="password" id="password" autoComplete="current-password" />
-                        <button className={styles.form__password__toggleButton} onClick={togglePassword}>Toggle</button>
+                        <button className={styles.form__password__toggleButton} onClick={togglePassword}>{passwordField === 'password' ? <FaEye /> : <FaEyeSlash/>}</button>
                     </div>
                     <div className={styles.checkbox}>
                         <input onChange={handleInput} type="checkbox" name="remember" id="remember" />
