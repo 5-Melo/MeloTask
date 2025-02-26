@@ -1,7 +1,7 @@
 .container {
     background-color: #FDEBEB;
     width: 35%;
-    padding: 5rem 2rem;
+    padding: 8rem 2rem;
     padding-bottom: 15rem;
     border-top-left-radius: 4rem;
     border-bottom-left-radius: 4rem;
@@ -13,43 +13,62 @@
     align-items: center;
     justify-content: center;
     gap: 4rem;
+    text-align: center;
 }
 .heading {
     color: #2E2E2E;
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-transform: capitalize;
     padding: 2rem 0;
 }
 .heading h1:first-child {
     color: #F38181;
 }
+.heading p {
+    text-align: center;
+}
 .fields {
     display:flex;
     flex-direction: column;
     gap: 3rem;
+    align-items: flex-start;
 }
 .fields input{
     border-color:transparent;
     background-color: transparent;
     border-bottom: .1rem #DFDBEE solid;
+    font-size: 1rem;
 }
 
 .fields input:focus {
     outline-width: 0;
 }
 
+.form__password {
+        position: relative;
+}
+.form__password__toggleButton {
+    padding: 1rem;
+    background-color: transparent;
+    border: none;
+    right: -10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
 .checkbox {
     display: flex;
     align-items: center;
-    font-size: 1.5rem;;
+    font-size: 1rem;;
 }
 .checkbox input[type="checkbox"] {
-    color: red;
-   background-color: red;
-   border: 1rem red solid;
-   margin-right: 0.5rem;;
+    width: 15px;
+    height: 15px;
+    margin-right: 0.5rem;
+
 }
 .submit {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -59,12 +78,14 @@
     text-transform: capitalize;
 }
 .submit input[type='submit'] {
+    width: 100%;
     font-weight: bold;
     background-color: #F38181;
     font-size: 2rem;
-    padding: 1rem 10rem;;
+    padding: 1rem 2rem;;
     border-width: 0;
     border-radius: 1rem;
+    text-align: center;
 }
 .submit p {
     color: #232222;
