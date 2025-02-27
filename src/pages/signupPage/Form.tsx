@@ -14,36 +14,75 @@ interface props {
 
 
 const Form: React.FC<props> = ({ parentStyles }) => {
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState<string>('');
-    const [checkbox, setCheckbox] = useState<string>(false);
+    const [password, setPassword] = useState('');
+    const [checkbox, setCheckbox] = useState(false);
     const [passwordField,setPasswordField] = useState('password');
 
+
+    async function register (newUser)
+    {
+        console.log(newUser);
+        
+        const url = 'http://localhost:8080/api/auth/register'
+        const response = await fetch(url, {method:'POST' ,headers:{'Content-Type': 'application/json'}, body: JSON.stringify(newUser) })
+
+        if (response.ok) {
+            console.log("SUCCESS");
+
+        }
+        else {
+            console.log("register failed");
+        }
+        console.log(response);
+    }
     function handleClick(e)
     {
         e.preventDefault();
-        console.log("Hello from Radwan");
-        console.log(email);
-        console.log(password);
-        console.log(checkbox);
+        // console.log("Hello from Radwan");
+        // console.log(e.target);
+        // console.log(firstName);
+        // console.log(lastName);
+        // console.log(username);
+        // console.log(email);
+        // console.log(password);
+        // console.log(checkbox);
+        const newUser = { firstName, lastName , username, email, password};
+
+        register(newUser);
+        
+        
     }
     function handleInput(e)
     {
-        const type : string = e.target.type
-        if (type === "email")
+        const id = e.target.id
+        if (id === "email")
         {
-            console.log("Setting Email");
             setEmail(e.target.value)
         }
-        else if (type === "password")
+        else if (id === "password")
         {
-            console.log("setting password")
             setPassword(e.target.value)
         }
-        else
+        else if(id === "remember")
         {
-            console.log("setting checkbox")
             setCheckbox(e.target.checked);
+        }
+        else if(id === 'firstName')
+        {
+            setFirstName(e.target.value);
+        }
+        else if(id === 'lastName')
+        {
+            setLastName(e.target.value);
+        }
+        else if(id === 'username')
+        {
+            setUsername(e.target.value);
         }
     }
     function togglePassword(e)
@@ -53,24 +92,22 @@ const Form: React.FC<props> = ({ parentStyles }) => {
     return (
         <div className={`${styles.container} ${parentStyles.form}`}>
             <div className={styles.heading}>
-                <h1>Sign In</h1>
-                <p>"enter, access, achieve"</p>
+                <h1>Let's get you started</h1>
             </div>
             <form className={styles.form} onSubmit={handleClick}>
                 <div className={styles.fields}>
-                    <input onChange={handleInput} type="email" placeholder="Email Address" name="email" id="email" autoComplete="username" />
-                    <div className={styles.form__password}>
-                        <input onChange={handleInput} type={passwordField} placeholder="Password" name="password" id="password" autoComplete="current-password" />
-                        <button className={styles.form__password__toggleButton} onClick={togglePassword}>{passwordField === 'password' ? <FaEye /> : <FaEyeSlash/>}</button>
-                    </div>
-                    <div className={styles.checkbox}>
-                        <input onChange={handleInput} type="checkbox" name="remember" id="remember" />
-                        <label htmlFor="remember">Remember me</label>
-                    </div>
+                    <input onChange={handleInput} className={`${styles['w-40']} ${styles.fields__input}`} type="text" placeholder="First Name" id="firstName"/>
+                    <input onChange={handleInput} className={`${styles['w-40']} ${styles.fields__input}`} type="text" placeholder="Last Name" id="lastName" />
+                    <input onChange={handleInput} className={`${styles.fields__input}`} type="text" placeholder="Username" id="username" />
+                    <input onChange={handleInput} className={`${styles.fields__input}`} type="email" placeholder="Email Address" id="email"  />
+                    <input onChange={handleInput} className={`${styles.fields__input}`} type={passwordField} placeholder="Password" id="password" />
+                    <button type='button' className={styles.form__password__toggleButton} onClick={togglePassword}>{passwordField === 'password' ? <FaEye /> : <FaEyeSlash/>}</button>
+                    <input onChange={handleInput} className={styles.checkbox} type="checkbox" id="remember" />
+                    <label htmlFor="remember">Remember me</label>
                 </div>
                 <div className={styles.submit}>
-                    <input type="submit" value="Sign In" />
-                    <p>don't have an account <a href="/signup">Sing Up</a></p>
+                    <input type="submit" value="Create an Account" />
+                    <p>Already have an account <a href="/signin">Sing in</a></p>
                 </div>
             </form>
         </div>

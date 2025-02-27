@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from './Form.tsx'
 import Figure from './Figure.tsx'
-import styles from './signinPage.module.css'
+import styles from './signupPage.module.css'
 
 const SigninPage: React.FC = () => {
     return (
