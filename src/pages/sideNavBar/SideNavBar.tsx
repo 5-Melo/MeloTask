@@ -66,7 +66,6 @@ export default function SideNavBar({ pages }: SideNavBarProps) {
                         <ul className={styles["side-nav__nav-list"]}>
                             {[
                                 { name: "Dashboard", icon: <RxDashboard /> },
-                                { name: "Projects", icon: <LuBriefcaseBusiness /> },
                                 { name: "Backlog", icon: <FaListCheck /> },
                                 { name: "Gantt Chart", icon: <FaRegClock /> },
                                 { name: "Project Template", icon: <GoStack /> },

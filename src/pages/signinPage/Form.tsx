@@ -14,26 +14,44 @@ interface props {
 
 
 const Form: React.FC<props> = ({ parentStyles }) => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState<string>('');
     const [checkbox, setCheckbox] = useState<string>(false);
     const [passwordField,setPasswordField] = useState('password');
 
-    function handleClick(e)
+    async function handleClick(e)
     {
         e.preventDefault();
         console.log("Hello from Radwan");
-        console.log(email);
+        console.log(username);
         console.log(password);
         console.log(checkbox);
+
+        const user = {username, password};
+        const url = 'http://localhost:8080/api/auth/login'
+        const response = await fetch(url, {method:'POST', headers:{'Content-Type': 'application/json'}, body:JSON.stringify(user)})
+
+        if(response.ok)
+        {
+            console.log("SUCCESS");
+            const data = await response.json();
+            console.log(data.token);
+            window.location.href = '/dashboard'
+            
+        }
+        else
+        {
+            console.log('wrong input, there is no user');
+        }
+        console.log(response);
     }
     function handleInput(e)
     {
-        const type : string = e.target.type
-        if (type === "email")
+        const type : string = e.target.id
+        if (type === "username")
         {
-            console.log("Setting Email");
-            setEmail(e.target.value)
+            console.log("Setting username");
+            setUsername(e.target.value)
         }
         else if (type === "password")
         {
@@ -58,10 +76,10 @@ const Form: React.FC<props> = ({ parentStyles }) => {
             </div>
             <form className={styles.form} onSubmit={handleClick}>
                 <div className={styles.fields}>
-                    <input onChange={handleInput} type="email" placeholder="Email Address" name="email" id="email" autoComplete="username" />
+                    <input onChange={handleInput} type="text" placeholder="username" id="username" autoComplete="username" />
                     <div className={styles.form__password}>
-                        <input onChange={handleInput} type={passwordField} placeholder="Password" name="password" id="password" autoComplete="current-password" />
-                        <button className={styles.form__password__toggleButton} onClick={togglePassword}>{passwordField === 'password' ? <FaEye /> : <FaEyeSlash/>}</button>
+                        <input onChange={handleInput} type={passwordField} placeholder="Password" id="password" autoComplete="current-password" />
+                        <button type='button' className={styles.form__password__toggleButton} onClick={togglePassword}>{passwordField === 'password' ? <FaEye /> : <FaEyeSlash/>}</button>
                     </div>
                     <div className={styles.checkbox}>
                         <input onChange={handleInput} type="checkbox" name="remember" id="remember" />
