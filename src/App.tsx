@@ -6,7 +6,7 @@ import LoginPage from './pages/loginPage/LoginPage.tsx'
 import SignupPage from "./pages/signupPage/SignupPage.tsx";
 import ProjectTemplate from "./pages/projectTemplate/ProjectTemplate.tsx";
 import ProjectPage from './pages/projectsPage/ProjectPage.tsx'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Navigate, BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GlobalProvider } from "./Context/GlobalContext.tsx";
 
 function App() {
@@ -17,6 +17,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/dashboard" element={<SideNavBar/>}>
+
+            <Route index element={<Navigate to = 'projects'/>}/>
             <Route path='projects/' element={<ProjectPage/>}/>
             <Route path='projects/:id' element={<Dashboard/>}/>
             <Route path='createProject' element={<ProjectTemplate/>} />
