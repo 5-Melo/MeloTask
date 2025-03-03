@@ -9,15 +9,50 @@ export default function ProjectTemplate() {
     const [endDate, setEndDate] = useState('');
     const [description, setDescription] = useState('');
 
-    const handleSave = (event: React.FormEvent) => {
+    const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+
+
+
+    async function saveProject(projectData)
+    {
+
+
+        const projectPostUrl = `http://localhost:8080/api/users/${userId}/projects`
+        const response = await fetch(projectPostUrl, { method: 'POST', headers: { 'authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(projectData) })
+        if(response.ok)console.log('SUCCESS');
+        else console.log("FAILED");
+        const data = await response.json();
+        return data.id;
+        
+        // console.log(data);
+
+    }
+    async function makeStatuses(id)
+    {
+        const projectStatusesUrl = `http://localhost:8080/api/users/${userId}/projects/${id}/statuses`
+        const statuses = {name:'Free',color:'green'}
+        const statuses2 = {name:'In Progress',color:'orange'}
+        const statuses3 = {name:'Done',color:'red'}
+        await fetch(projectStatusesUrl, { method: 'POST', headers: { 'authorization': `Bearer ${token}`,'Content-Type':'application/json' }, body:JSON.stringify(statuses) });
+        await fetch(projectStatusesUrl, { method: 'POST', headers: { 'authorization': `Bearer ${token}` ,'Content-Type':'application/json' }, body:JSON.stringify(statuses2) });
+        await fetch(projectStatusesUrl, { method: 'POST', headers: { 'authorization': `Bearer ${token}` ,'Content-Type':'application/json' }, body:JSON.stringify(statuses3) });
+    }
+    const handleSave = async (event: React.FormEvent) => {
         event.preventDefault();
         const projectData = {
-            projectName,
+            title:projectName,
             status,
             startDate,
             endDate,
             description,
+            teamMembers:[]
         };
+
+        const id = await saveProject(projectData)
+        console.log(id);
+        
+        await makeStatuses(id);
         console.log('Project Data:', projectData);
         // Add your save logic here
     };
@@ -47,8 +82,8 @@ export default function ProjectTemplate() {
                             onChange={(e) => setStatus(e.target.value)}
                         >
                             <option value="notStarted">Not Started</option>
-                            <option value="inProgress">In Progress</option>
-                            <option value="completed">Completed</option>
+                            <option value="IN_PROGRESS">In Progress</option>
+                            <option value="DONE">Completed</option>
                         </select>
                     </div>
                     <div className={styles['project-template__form-group']}>

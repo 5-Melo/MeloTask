@@ -1,9 +1,32 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import TodoBar from './TodoBar.tsx'
 import styles from './dashboard.module.css'
 import styles2 from './todoBar.module.css'
 import styles3 from './taskCard.module.css'
 function Dashboard() {
+
+  const {id} = useParams();
+  const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
+  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  const [statuses,setStatuses] = useState([]);
+  useEffect(() => {
+    console.log(id);
+    console.log(userId);
+    console.log(token);
+    (async()=>{
+      const labelUrl = `http://localhost:8080/api/users/${userId}/projects/${id}/statuses`
+      const response = await fetch(labelUrl, {method:'GET',headers:{'authorization':`Bearer ${token}`}});
+      console.log(response);
+      
+      const data = await response.json();
+      setStatuses(data)
+      console.log(data);
+      
+    })()
+
+  },[])
+  
   const task1 = {
     title: 'issue #11',
     priority: "low",
@@ -63,8 +86,6 @@ function Dashboard() {
           if (e.clientY >= task - 100 && e.clientY <= task + 100) {
             ulOver.insertBefore(draggedTask, ulOver.children[idx])
             ys[ulIdx].splice(idx,0,)
-
-            // console.log(draggedTask);
             bl = false;
           }
         })
@@ -112,45 +133,12 @@ function Dashboard() {
   }
   return (
     <div className={styles.container} ref={dashboard} onDragStart={dragStart} onDragEnd={dragEnd}>
-      <TodoBar
-        barName='Free'
-        tasks={tasks}
-        color='red'
+      {statuses.map((status)=>{
+        return(<TodoBar
+        status={status}
         dragOver={dragOver}
-
-      />
-      <TodoBar
-        barName='In Progress'
-        tasks={tasks}
-        color='orange'
-        dragOver={dragOver}
-
-      />
-      <TodoBar
-        barName='Done'
-        tasks={tasks}
-        color='green'
-        dragOver={dragOver}
-
-      />
-      <TodoBar
-        barName='Done'
-        tasks={tasks}
-        color='yellow'
-        dragOver={dragOver}
-      />
-      <TodoBar
-        barName='Done'
-        tasks={tasks}
-        color='yellow'
-        dragOver={dragOver}
-      />
-      <TodoBar
-        barName='Done'
-        tasks={tasks}
-        color='yellow'
-        dragOver={dragOver}
-      />
+        />)
+      })}
     </div>
   )
 }
