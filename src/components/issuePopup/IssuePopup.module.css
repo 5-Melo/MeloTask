@@ -1,7 +1,9 @@
 /* Block: issue-popup */
 .wrapper{
+    width:100vw;
     height: 100vh;
     background-color: rgba(85, 85, 85, 0.44);
+    position: absolute;
 }
 
 .issue-popup {
@@ -78,6 +80,8 @@
     font-weight: bold;
     color: #333;
     margin-bottom: 20px;
+    border:none;
+    outline: none;
 }
 
 /* Element: issue-popup__description */

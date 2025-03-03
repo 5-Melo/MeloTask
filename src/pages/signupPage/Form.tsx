@@ -107,7 +107,7 @@ const Form: React.FC<props> = ({ parentStyles }) => {
                 </div>
                 <div className={styles.submit}>
                     <input type="submit" value="Create an Account" />
-                    <p>Already have an account <a href="/signin">Sing in</a></p>
+                    <p>Already have an account <a href="/login">Log In</a></p>
                 </div>
             </form>
         </div>

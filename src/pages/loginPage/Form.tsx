@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState } from 'react';
+import {useNavigate, Link} from 'react-router-dom'
 import styles from './form.module.css'
-import { useState } from 'react'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 
@@ -14,6 +14,9 @@ interface props {
 
 
 const Form: React.FC<props> = ({ parentStyles }) => {
+    const navigate = useNavigate();
+
+    
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState<string>('');
     const [checkbox, setCheckbox] = useState<string>(false);
@@ -22,7 +25,6 @@ const Form: React.FC<props> = ({ parentStyles }) => {
     async function handleClick(e)
     {
         e.preventDefault();
-        console.log("Hello from Radwan");
         console.log(username);
         console.log(password);
         console.log(checkbox);
@@ -34,14 +36,19 @@ const Form: React.FC<props> = ({ parentStyles }) => {
         if(response.ok)
         {
             console.log("SUCCESS");
+
             const data = await response.json();
-            console.log(data.token);
-            window.location.href = '/dashboard'
+            const payload = JSON.parse(atob(data.token.split('.')[1]));
+
             
+            checkbox ? localStorage.setItem('token', data.token) : sessionStorage.setItem('token', data.token)
+            checkbox ? localStorage.setItem('userId', payload.userId) : sessionStorage.setItem('userId', payload.userId)
+
+            navigate('/dashboard')            
         }
         else
         {
-            console.log('wrong input, there is no user');
+            alert('wrong input, there is no user');
         }
         console.log(response);
     }
@@ -71,12 +78,12 @@ const Form: React.FC<props> = ({ parentStyles }) => {
     return (
         <div className={`${styles.container} ${parentStyles.form}`}>
             <div className={styles.heading}>
-                <h1>Sign In</h1>
+                <h1>Log In</h1>
                 <p>"enter, access, achieve"</p>
             </div>
             <form className={styles.form} onSubmit={handleClick}>
                 <div className={styles.fields}>
-                    <input onChange={handleInput} type="text" placeholder="username" id="username" autoComplete="username" />
+                    <input onChange={handleInput} type="text" placeholder="Username" id="username" autoComplete="username" />
                     <div className={styles.form__password}>
                         <input onChange={handleInput} type={passwordField} placeholder="Password" id="password" autoComplete="current-password" />
                         <button type='button' className={styles.form__password__toggleButton} onClick={togglePassword}>{passwordField === 'password' ? <FaEye /> : <FaEyeSlash/>}</button>
@@ -87,11 +94,11 @@ const Form: React.FC<props> = ({ parentStyles }) => {
                     </div>
                 </div>
                 <div className={styles.submit}>
-                    <input type="submit" value="Sign In" />
-                    <p>don't have an account <a href="/signup">Sing Up</a></p>
+                    <input type="submit" value="Log In" />
+                    <p>don't have an account <Link to="/signup">Sing Up</Link></p>
                 </div>
             </form>
-        </div>
+        </div>      
     );
 }
 

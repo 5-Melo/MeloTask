@@ -3,3 +3,38 @@
     flex-wrap: wrap;
     gap:2rem;
 }
+
+.createProject {
+    width: 380px;
+    height: 250px;
+    border: 7px dashed #F38181;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.createProject:hover .createProject__plus
+{
+    background-color: #F38181;
+    color: white;
+    border: 5px solid #F38181;
+}
+
+
+.createProject__plus 
+{
+    width: 100px;
+    height: 100px;
+    border: 5px dashed #F38181;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #F38181;
+    font-size: 4rem;
+    transition: .3s all;
+
+}
+
+
+   

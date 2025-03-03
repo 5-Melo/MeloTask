@@ -10,7 +10,7 @@ export default function Landing() {
           <li><a className={styles.landing__navItem} href="/">Home</a></li>
           <li><a className={styles.landing__navItem} href="/">Contact</a></li>
           <li><a className={styles.landing__navItem} href="/">About</a></li>    
-          <li><a className={`${styles.landing__navItem} ${styles.landing__navItemHighlight}`} href="/signin">Sign In</a></li>    
+          <li><a className={`${styles.landing__navItem} ${styles.landing__navItemHighlight}`} href="/login">Log In</a></li>    
           <li><a className={styles.landing__navItem} href="/signup">Sign up</a></li>    
         </ul>
       </div>
