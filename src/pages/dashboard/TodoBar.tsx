@@ -28,6 +28,8 @@ const TodoBar = ({ status,dragOver }) => {
 
   useEffect(()=>{
     (async()=>{
+      console.log(status);
+      
       const tasksUrl = `http://localhost:8080/api/users/${userId}/projects/${status.projectId}/tasks?statusId=${status.id}`
       const response = await fetch(tasksUrl,{headers:{'authorization':`Bearer ${token}`}});
       const data = await response.json()

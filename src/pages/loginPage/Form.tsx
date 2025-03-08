@@ -39,10 +39,12 @@ const Form: React.FC<props> = ({ parentStyles }) => {
 
             const data = await response.json();
             const payload = JSON.parse(atob(data.token.split('.')[1]));
-
+            console.log(payload);
+            
             
             checkbox ? localStorage.setItem('token', data.token) : sessionStorage.setItem('token', data.token)
             checkbox ? localStorage.setItem('userId', payload.userId) : sessionStorage.setItem('userId', payload.userId)
+            checkbox ? localStorage.setItem('username', payload.sub) : sessionStorage.setItem('username', payload.sub)
 
             navigate('/dashboard')            
         }

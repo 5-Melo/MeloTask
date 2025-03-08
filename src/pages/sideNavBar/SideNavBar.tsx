@@ -21,7 +21,7 @@ export default function SideNavBar() {
 
     return (
         <div className={styles["side-nav"]}>
-            {popUp?<IssuePopup/>:''}
+            {popUp?<IssuePopup />:''}
             <header className={styles["side-nav__header"]}>
                 <div className={styles["side-nav__logo"]}>
                     <h2 className={styles["side-nav__logo-text"]}>MeloTask</h2>

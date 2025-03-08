@@ -22,6 +22,7 @@ function App() {
             <Route path='projects/' element={<ProjectPage/>}/>
             <Route path='projects/:id' element={<Dashboard/>}/>
             <Route path='createProject' element={<ProjectTemplate/>} />
+            
           </Route>
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/signup" element={<SignupPage/>}/>
