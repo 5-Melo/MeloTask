@@ -6,9 +6,9 @@
 }
 
 .issue-detail__title {
+    flex-basis:200px;
     color: #5A5A5A;
     font-weight: normal;
-    text-wrap: nowrap;
     margin-top: 10px;
 }
 
@@ -75,7 +75,7 @@
     align-items: center;
     border: 2px dashed #F38181;
     cursor: pointer;
-    transition: all 0.4s;
+    transition: .5s all;
 }
 
 .issue-detail__add:hover{
@@ -94,7 +94,7 @@
     border-radius: 50px;
     padding: 5px 10px;
     cursor: pointer;
-    transition: all 0.4s;
+    transition: 0.5s all;
 }
 .issue-detail__submit:hover{
     background-color: #d87777;
@@ -106,15 +106,17 @@
     max-width: 0px; 
     opacity: 0; 
     overflow: hidden; 
-    transition: max-width 1s ease-out, opacity 0.8s ease-in; /* Smooth transition */
-    padding: 5px;
+    transition: max-width .5s ease-out, opacity 0.8s ease-in; /* Smooth transition */
     border: #EBECF2 solid 1px;
     border-radius: 50px;
+    padding:5px;
+    display: none;
 }
 
 .issue-detail__addFields--visible {
-    max-width: 100%; 
+    max-width: 50%; 
     opacity: 1;
+    display: flex;
 }
 
 /* Base styles for the color input */
@@ -158,4 +160,16 @@
 .issue-detail__name{
     outline: none;
     border: none;
+}
+
+
+.issue-popup__statusSelect {
+    padding:.5rem 1rem;
+    border-radius: 2rem;
+    outline: none;
+    background-color: #F38181;
+    color: white;
+    border:none;
+    cursor: pointer;
+
 }

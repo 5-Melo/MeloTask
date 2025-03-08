@@ -4,6 +4,7 @@
     height: 100vh;
     background-color: rgba(85, 85, 85, 0.44);
     position: absolute;
+    z-index: 1;
 }
 
 .issue-popup {
@@ -12,12 +13,12 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     width: 600px;
-    height: 600px;
+    height: 700px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    overflow: auto;
+    overflow: hidden;
 }
 
 /* Element: issue-popup__header */
@@ -94,6 +95,11 @@
     font-size: 16px;
     color: #555;
     line-height: 1.5;
+    border: none;
+    outline: none;
+}
+.issue-popup--activeInput {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 
@@ -113,4 +119,18 @@
     font-size: 18px;
     border-radius: 15px;
     cursor: pointer;
+}
+
+.issue-popup__createButton{
+    background-color: #F38181;
+    border: none;
+    color: white;
+    padding: 5px 15px;
+    font-size: 18px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: auto;
+    margin-top: 20px;
+    display: block;
+
 }
