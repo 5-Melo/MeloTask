@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import React, { useState } from 'react';
 import IssueDetail from '../../components/issueDetail/IssueDetail.tsx';
 import styles from './ProjectTemplate.module.css';
@@ -16,12 +18,16 @@ export default function ProjectTemplate() {
 
     async function saveProject(projectData)
     {
-
-
         const projectPostUrl = `http://localhost:8080/api/users/${userId}/projects`
         const response = await fetch(projectPostUrl, { method: 'POST', headers: { 'authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(projectData) })
-        if(response.ok)console.log('SUCCESS');
-        else console.log("FAILED");
+        if(response.ok){
+            toast.success('Project Created Successfully')
+        }
+        else {
+            toast.error('Project Creation Failed')
+        }
+        console.log(response);
+        
         const data = await response.json();
         return data.id;
         
@@ -59,6 +65,7 @@ export default function ProjectTemplate() {
 
     return (
         <div className={styles['project-template']}>
+            <ToastContainer/>
             <h1 className={styles['project-template__header']}>Shape your projects to success!</h1>
             <form className={styles['project-template__form']} onSubmit={handleSave}>
                 <div className={styles['project-template__grid']}>

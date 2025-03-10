@@ -33,7 +33,7 @@ const Form: React.FC<props> = ({ parentStyles }) => {
 
         if (response.ok) {
             console.log("SUCCESS");
-
+            window.location.href = '/login';
         }
         else {
             console.log("register failed");

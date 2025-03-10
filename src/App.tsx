@@ -8,6 +8,7 @@ import ProjectTemplate from "./pages/projectTemplate/ProjectTemplate.tsx";
 import ProjectPage from './pages/projectsPage/ProjectPage.tsx'
 import { Navigate, BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GlobalProvider } from "./Context/GlobalContext.tsx";
+import IssuePopup from "./components/issuePopup/IssuePopup.tsx";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
     <GlobalProvider>
       <Router>
         <Routes>
+          {/* <Route path="/" element={<IssuePopup />} /> */}
           <Route path="/" element={<Landing />} />
           <Route path="/dashboard" element={<SideNavBar/>}>
 

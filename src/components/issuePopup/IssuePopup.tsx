@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import React, { useState, useContext, useEffect } from 'react';
 import { FaAngleLeft } from "react-icons/fa";
 import { FiEdit3 } from "react-icons/fi";
@@ -78,7 +80,7 @@ export default function IssuePopup() {
         }        
         await getTasks();
         await postTask(task);
-        setPopUp(false);
+        // setPopUp(false);
 
         
     }
@@ -88,7 +90,15 @@ export default function IssuePopup() {
         
         const saveTaskUrl = `http://localhost:8080/api/users/${userId}/projects/${projectId}/tasks`
         const response = await fetch(saveTaskUrl, { method: 'POST', headers: { 'authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(task) })
+        console.log("posting task");
+        
         const data = await response.json();
+        if(response.ok){
+            toast.success('Task Created Successfully')
+        }
+        else {
+            toast.error('Task Creation Failed')
+        }
         console.log(data);
         console.log(response);
         
@@ -96,6 +106,7 @@ export default function IssuePopup() {
 
     return (
         <div className={styles["wrapper"]} onClick={backgroundClick}>
+            <ToastContainer />
             <div className={styles["issue-popup"]} onClick={issueClick}>
                 <div className={styles["issue-popup__header"]}>
                     <div className={styles["issue-popup__header-left"]}>
