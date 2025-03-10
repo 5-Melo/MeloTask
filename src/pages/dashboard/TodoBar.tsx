@@ -49,7 +49,7 @@ const TodoBar = ({ status,dragOver }) => {
         </div>
           <ul className={styles.taskList}>
             {
-                  tasks.map(task  => <TaskCard task={task}/>)
+                  tasks.map(task  => {return (<TaskCard task={task}/>)})
             }
         </ul>
     </div>
