@@ -103,7 +103,7 @@
 .issue-detail__addFields {
     display: flex;
     align-items: center;
-    max-width: 0px; 
+    max-width: 0%; 
     opacity: 0; 
     overflow: hidden; 
     transition: max-width .5s ease-out, opacity 0.8s ease-in; /* Smooth transition */
@@ -114,7 +114,7 @@
 }
 
 .issue-detail__addFields--visible {
-    max-width: 50%; 
+    max-width: 100%; 
     opacity: 1;
     display: flex;
 }
