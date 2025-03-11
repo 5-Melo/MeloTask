@@ -13,9 +13,11 @@ interface IssueDetailProps {
     color?: boolean;
     add?: boolean;
     labelcreate?: boolean;
+    colors?: (string | null)[];
+
 }
 
-export default function IssueDetail({ title = "Title", attributes = [], setAttributes, options = [], avatar = false, add = false, labelcreate = false }: IssueDetailProps) {
+export default function IssueDetail({ title = "Title", attributes = [], setAttributes, options = [], avatar = false, add = false, labelcreate = false, colors }: IssueDetailProps) {
 
     const [addingFields, setAddingFields] = useState(false);
     const [newAttribute, setNewAttribute] = useState<string | null>(null);
@@ -49,7 +51,7 @@ export default function IssueDetail({ title = "Title", attributes = [], setAttri
                     <span className={styles["issue-detail__avatar-name"]}>{attribute}</span>
                 </div>
             ) : (
-                <div key={index} className={styles["issue-detail__attribute"]}>
+                <div style={{ backgroundColor: `${colors[index]}90` }} key={index} className={styles["issue-detail__attribute"]}>
                     {/* {color ? <div className={styles["issue-detail__color-indicator"]}></div> : null} */}
                     <span className={styles["issue-detail__attribute-text"]}>{attribute}</span>
                 </div>
@@ -76,9 +78,6 @@ export default function IssueDetail({ title = "Title", attributes = [], setAttri
                 setNewLabel('');
                 setLabelColor('#000000');
                 setCreatingLabel(false);
-                options.push(data.name);
-                setNewAttribute(data.name);
-                handleAddAttribute();
             } catch (err) {
                 console.log(err);
             }

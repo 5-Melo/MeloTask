@@ -25,6 +25,7 @@ export default function IssuePopup({ create = false, taskid }) {
     const [statuses, setStatuses] = useState([]);
     const [statue, setStatue] = useState('');
     const [labels, setLabels] = useState([]);
+    // const [labelColors, setLabelColors] = useState([]);
     const [assignees, setAssignees] = useState([]);
     const [dependencies, setDependencies] = useState([]);
 
@@ -50,7 +51,7 @@ export default function IssuePopup({ create = false, taskid }) {
                     setDescription(taskData.description);
                     setStatue(taskData.statusId);
                     setLabels(taskData.labels.map(label => label.name));
-                    setAssignees(taskData.assignees.map(assignee => assignee.name));
+                    setAssignees(taskData.assignees.map(assignee => assignee.username));
                     setDependencies(taskData.dependencies.map(dependency => dependency.title));
                 }
             }
@@ -61,8 +62,56 @@ export default function IssuePopup({ create = false, taskid }) {
         const taskUrl = `http://localhost:8080/api/users/${userId}/projects/${projectId}/tasks/${taskId}`;
         const response = await fetch(taskUrl, { method: 'GET', headers: { 'authorization': `Bearer ${token}` } });
         if (response.ok) {
-            const data = await response.json();
-            return data;
+            const taskData = await response.json();
+
+            // Fetch assignees
+            const assignees = await Promise.all(
+                taskData.assignees.map(async (assigneeId) => {
+                    const response = await fetch(`http://localhost:8080/api/users/${assigneeId}`, {
+                        method: 'GET',
+                        headers: { 'authorization': `Bearer ${token}` }
+                    });
+                    if (response.ok) {
+                        return await response.json();
+                    }
+                    return null;
+                })
+            );
+
+            // Fetch labels
+            const labels = await Promise.all(
+                taskData.labels.map(async (labelId) => {
+                    const response = await fetch(`http://localhost:8080/api/users/${userId}/projects/${projectId}/labels/${labelId}`, {
+                        method: 'GET',
+                        headers: { 'authorization': `Bearer ${token}` }
+                    });
+                    if (response.ok) {
+                        return await response.json();
+                    }
+                    return null;
+                })
+            );
+
+            // Fetch dependencies
+            const dependencies = await Promise.all(
+                taskData.dependencies.map(async (dependencyId) => {
+                    const response = await fetch(`http://localhost:8080/api/users/${userId}/projects/${projectId}/tasks/${dependencyId}`, {
+                        method: 'GET',
+                        headers: { 'authorization': `Bearer ${token}` }
+                    });
+                    if (response.ok) {
+                        return await response.json();
+                    }
+                    return null;
+                })
+            );
+
+            return {
+                ...taskData,
+                assignees: assignees.filter(assignee => assignee !== null),
+                labels: labels.filter(label => label !== null),
+                dependencies: dependencies.filter(dependency => dependency !== null)
+            };
         }
         return null;
     }
@@ -139,16 +188,33 @@ export default function IssuePopup({ create = false, taskid }) {
             actualHours: 5,
             projectId
         };
+        if(taskid){
+            await putTask(taskid, task);
+        }
+        else{
         await postTask(task);
+        }
     }
 
     async function postTask(task) {
         const saveTaskUrl = `http://localhost:8080/api/users/${userId}/projects/${projectId}/tasks`;
         const response = await fetch(saveTaskUrl, { method: 'POST', headers: { 'authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(task) });
         if (response.ok) {
+            console.log(response);
+            
             toast.success('Task Created Successfully');
         } else {
             toast.error('Task Creation Failed');
+        }
+    }
+
+    async function putTask(taskId, task) {
+        const updateTaskUrl = `http://localhost:8080/api/users/${userId}/projects/${projectId}/tasks/${taskId}`;
+        const response = await fetch(updateTaskUrl, { method: 'PUT', headers: { 'authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(task) });
+        if (response.ok) {
+            toast.success('Task Updated Successfully');
+        } else {
+            toast.error('Task Update Failed');
         }
     }
 
@@ -194,7 +260,7 @@ export default function IssuePopup({ create = false, taskid }) {
                     {/* <IssueDetail title="Created By" avatar={true} attributes={[username]} options={[]} /> */}
                     <IssueDetail title="Assigned to" avatar={true} add={edit} attributes={assignees} setAttributes={setAssignees} options={allAssignees.map(user => user.username)} />
                     <IssueDetail title="Dependencies" add={edit} attributes={dependencies} setAttributes={setDependencies} options={allTasks.map(task => task.title)} />
-                    <IssueDetail title="Labels" add={edit} labelcreate={true} attributes={labels} setAttributes={setLabels} options={allLabels.map(label => label.name)} />
+                    <IssueDetail title="Labels" add={edit} labelcreate={true} attributes={labels} setAttributes={setLabels} options={allLabels.map(label => label.name)} colors={allLabels.map(label => label.color)} />
                     <div className={styles["issue-popup__status"]}>
                         <h4 className={styles["issue-popup__subtitle"]}>Status:</h4>
                         {edit ? (

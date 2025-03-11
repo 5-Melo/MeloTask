@@ -134,3 +134,36 @@
     display: block;
 
 }
+
+
+.issue-popup__status {
+    margin-top: 20px;
+    display: flex;
+}
+
+.issue-popup__subtitle {
+    flex-basis:120px;
+    color: #5A5A5A;
+    font-weight: normal;
+    margin-top: 10px;
+}
+
+.issue-popup__status-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.issue-popup__status-select {
+    /* width: 100%; */
+    padding: 0px;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+}
+
+
+.issue-popup__status-text {
+    font-size: 14px;
+    color: #333;
+}
