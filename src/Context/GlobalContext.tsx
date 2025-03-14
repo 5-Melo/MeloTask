@@ -4,11 +4,13 @@ import React, { createContext, useState } from 'react';
 import { Project } from '../types/project';
 
 // Define the context state interface
-interface GlobalContextState {
+export interface GlobalContextState {
     popUp: boolean;
     setPopUp: (value: boolean) => void;
     projects: Project[];
     setProjects: (projects: Project[]) => void;
+    currentProject?: Project 
+    setCurrentProject: (project: Project) => void
 }
 
 // Create the context with an initial undefined state
@@ -23,13 +25,16 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const [popUp, setPopUp] = useState<boolean>(false);
     // State for managing projects list
     const [projects, setProjects] = useState<Project[]>([]);
+    const [currentProject, setCurrentProject] = useState<Project>();
 
     // Create the context value object with proper typing
     const contextValue: GlobalContextState = {
         popUp,
         setPopUp,
         projects,
-        setProjects
+        setProjects,
+        currentProject,
+        setCurrentProject
     };
 
     return (
@@ -37,18 +42,6 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
             {children}
         </GlobalContext.Provider>
     );
-};
-
-/**
- * Custom hook for using the global context
- * @throws {Error} If used outside of GlobalProvider
- */
-export const useGlobalContext = (): GlobalContextState => {
-    const context = React.useContext(GlobalContext);
-    if (context === undefined) {
-        throw new Error('useGlobalContext must be used within a GlobalProvider');
-    }
-    return context;
 };
 
 export default GlobalContext;

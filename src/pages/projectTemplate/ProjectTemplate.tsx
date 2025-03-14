@@ -4,39 +4,42 @@ import React, { useContext, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { RiAccountCircleLine } from "react-icons/ri";
 import styles from './ProjectTemplate.module.css';
-import GlobalContext from '../../Context/GlobalContext.tsx';
+import GlobalContext, { GlobalContextState } from '../../Context/GlobalContext.tsx';
 import { useEffect } from 'react';
+import { TeamMemberId } from '../../types/project.ts';
 
-interface ProjectTemplateProps {
-    projectid?: string;  // Making projectid optional with ?
-}
 
-export default function ProjectTemplate({ projectid }: ProjectTemplateProps) {
+
+export default function ProjectTemplate() {
     const [projectName, setProjectName] = useState('');
-    const [status, setStatus] = useState('notStarted');
+    const [status, setStatus] = useState('IN_PROGRESS');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [description, setDescription] = useState('');
     const [username, setUsername] = useState('');
     const [usernames, setUsernames] = useState([]);
     const [selectedUsername, setSelectedUsername] = useState(null);
-    const [teamMembers, setTeamMembers] = useState([]);
-
+    const [teamMembers, setTeamMembers] = useState<TeamMemberId[]>([]);
+    const {currentProject} = useContext(GlobalContext) as GlobalContextState
+    const projectid = currentProject?.id;
     const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-    const {projects} = useContext(GlobalContext);
+    const {projects} = useContext(GlobalContext) as GlobalContextState;
 
 
     useEffect(() => {
         if(!projectid) return;
         const project = projects.find(proj => proj.id === projectid);
         if (project) {
+            console.log("YESS we found a project");
+            console.log(project);
+            
             setProjectName(project.title);
             setStatus(project.status);
             setStartDate(project.startDate);
             setEndDate(project.endDate);
             setDescription(project.description);
-            setTeamMembers(project.teamMembers);
+            setTeamMembers(project.teamMemberIds);
         }
     }, [projectid, projects]);
 
@@ -92,10 +95,11 @@ export default function ProjectTemplate({ projectid }: ProjectTemplateProps) {
         console.log('Add member:', selectedUsername);
     }
 
-    const handleUsernameChange = async (inputValue: string) => {
+    const handleUsernameChange = (inputValue) => {
         console.log(inputValue);
+        setUsername(inputValue);
 
-        await setUsername(inputValue);
+        const getSet = async() => {
         if (inputValue.length >= 3) {
             const response = await fetch(`http://localhost:8080/api/users/search?prefix=${inputValue}`, {
                 headers: { 'authorization': `Bearer ${token}` }
@@ -104,8 +108,17 @@ export default function ProjectTemplate({ projectid }: ProjectTemplateProps) {
             setUsernames(data.map(user => ({ value: user.username, label: user.username, id: user.id })));
             console.log('User data:', data);
         }
+        }
+        getSet();
     };
 
+    function deleteDelete (e) 
+    {
+        if(!projectid)
+        {
+
+        }
+    }
     return (
         <div className={styles['project-template']}>
             <ToastContainer />
@@ -131,7 +144,6 @@ export default function ProjectTemplate({ projectid }: ProjectTemplateProps) {
                             value={status}
                             onChange={(e) => setStatus(e.target.value)}
                         >
-                            <option value="notStarted">Not Started</option>
                             <option value="IN_PROGRESS">In Progress</option>
                             <option value="DONE">Completed</option>
                         </select>
@@ -169,7 +181,7 @@ export default function ProjectTemplate({ projectid }: ProjectTemplateProps) {
                         <CreatableSelect
                             className={styles['project-template__members-select']}
                             isClearable
-                            onInputChange={(e) => { handleUsernameChange(e) }}
+                            onInputChange={handleUsernameChange}
                             onChange={setSelectedUsername}
                             options={usernames}
                             placeholder="Enter or select a username"
@@ -188,7 +200,10 @@ export default function ProjectTemplate({ projectid }: ProjectTemplateProps) {
                         onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                 </div>
-                <button type="submit" className={styles['project-template__button']}>Create</button>
+                <div className={styles['project-template__button-group']}>
+                    <button type='button' onClick={deleteDelete} disabled={projectid ? false: true} className={styles['project-template__button']}>Delete</button>
+                    <button type="submit" className={styles['project-template__button']}>Create</button>
+                </div>
             </form>
         </div>
     );

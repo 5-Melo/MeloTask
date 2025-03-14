@@ -25,8 +25,8 @@ function App() {
           <Route path="/signup" element={<SignupPage/>}/>
             <Route path="/dashboard" element={<SideNavBar/>}>
               <Route index element={<Navigate to = 'projects'/>}/>
-              <Route path='projects/:id' element={<Dashboard/>}/>
-              <Route path='createProject' element={<ProjectTemplate/>} />
+              <Route path='project/:id' element={<Dashboard/>}/>
+              <Route path='projectSettings' element={<ProjectTemplate/>} />
             </Route>
         </Routes>
       </Router>

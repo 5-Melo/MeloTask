@@ -1,11 +1,9 @@
 // Define project status types
-export type ProjectStatus = 'notStarted' | 'IN_PROGRESS' | 'DONE';
+export type ProjectStatus = 'IN_PROGRESS' | 'DONE';
 
 // Interface for team member data structure
-export interface TeamMember {
+export interface TeamMemberId {
     id: string;
-    value: string;
-    label: string;
 }
 
 // Interface for project data structure
@@ -16,7 +14,7 @@ export interface Project {
     startDate: string;
     endDate: string;
     description: string;
-    teamMembers: TeamMember[];
+    teamMemberIds: TeamMemberId[];
 }
 
 // Interface for project data to be sent to the API
@@ -26,7 +24,7 @@ export interface ProjectPayload {
     startDate: string;
     endDate: string;
     description: string;
-    teamMembers: string[]; // Array of member IDs
+    teamMemberIds: TeamMemberId[]; // Array of member IDs
 }
 
 // Interface for status data

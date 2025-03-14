@@ -1,12 +1,10 @@
 import React, { useEffect,useState , useContext} from 'react'
 import ProjectCard from './ProjectCard.tsx'
 import styles from './projectPage.module.css'
-import { FiPlus } from "react-icons/fi";
 import { useNavigate, Outlet } from 'react-router-dom';
-import GlobalContext from '../../Context/GlobalContext.tsx';
-import { FaChevronDown } from "react-icons/fa";
+import GlobalContext, { GlobalContextState } from '../../Context/GlobalContext.tsx';
 import ProjectTemplate from '../projectTemplate/ProjectTemplate.tsx';
-
+import Header from '../../components/header/Header.tsx';
 
 
 export default function ProjectPage() {
@@ -15,7 +13,7 @@ export default function ProjectPage() {
       const token = localStorage.getItem('token') || sessionStorage.getItem('token');
       const navigate = useNavigate();
       // let projects = []
-      const {projects ,setProjects} = useContext(GlobalContext);
+      const {projects ,setProjects} = useContext(GlobalContext) as GlobalContextState;
 
       useEffect(() => {
 
@@ -48,9 +46,7 @@ export default function ProjectPage() {
        :
         <></>
       }
-       <div className={styles['project-page__header']}>
-            <h1>Melo Task</h1>
-       </div>
+       <Header/>
        <div className={styles['project-page__content']}>
             <div className={styles['project-page__content__header']}>
                   <h1>Projects</h1>
@@ -58,13 +54,13 @@ export default function ProjectPage() {
             </div>
             <div className={styles['project-page__content__projects']}>
             {
-                  projects.map((project)=>{
+                  projects.map((project) => {
                         return(
                               <ProjectCard
+                              key={project.id}
                               project={project}
                               /> 
                         )
-
                   })
             }
             </div>
