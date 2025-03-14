@@ -7,7 +7,11 @@ import styles from './ProjectTemplate.module.css';
 import GlobalContext from '../../Context/GlobalContext.tsx';
 import { useEffect } from 'react';
 
-export default function ProjectTemplate(projectid) {
+interface ProjectTemplateProps {
+    projectid?: string;  // Making projectid optional with ?
+}
+
+export default function ProjectTemplate({ projectid }: ProjectTemplateProps) {
     const [projectName, setProjectName] = useState('');
     const [status, setStatus] = useState('notStarted');
     const [startDate, setStartDate] = useState('');
@@ -70,7 +74,8 @@ export default function ProjectTemplate(projectid) {
             description,
             teamMembers: teamMembers.map(member => member.id)
         };
-
+        console.log(projectData);
+        
         const id = await saveProject(projectData);
         console.log(id);
 
@@ -183,7 +188,7 @@ export default function ProjectTemplate(projectid) {
                         onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                 </div>
-                <button type="submit" className={styles['project-template__button']}>Save</button>
+                <button type="submit" className={styles['project-template__button']}>Create</button>
             </form>
         </div>
     );

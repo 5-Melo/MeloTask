@@ -20,16 +20,14 @@ function App() {
           {/* <Route path="/" element={<IssuePopup />} /> */}
           <Route path="/" element={<Landing />} />
           <Route path='/account' element={<AccountPage />} />
-          <Route path="/dashboard" element={<SideNavBar />}>
-
-            <Route index element={<Navigate to='projects' />} />
-            <Route path='projects/' element={<ProjectPage />} />
-            <Route path='projects/:id' element={<Dashboard />} />
-            <Route path='createProject' element={<ProjectTemplate />} />
-
-          </Route>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+          <Route path='projects/' element={<ProjectPage/>}/>
+          <Route path="/login" element={<LoginPage/>}/>
+          <Route path="/signup" element={<SignupPage/>}/>
+            <Route path="/dashboard" element={<SideNavBar/>}>
+              <Route index element={<Navigate to = 'projects'/>}/>
+              <Route path='projects/:id' element={<Dashboard/>}/>
+              <Route path='createProject' element={<ProjectTemplate/>} />
+            </Route>
         </Routes>
       </Router>
     </GlobalProvider>
