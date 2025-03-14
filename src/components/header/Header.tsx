@@ -11,7 +11,9 @@ export default function Header() {
         window.location.href = '/';
     };
 
-    
+    const handleAccountClick = () => {
+        window.location.href = '/account';
+    }
 
     return (
         <header className={styles.header}>
@@ -29,7 +31,7 @@ export default function Header() {
                 </div>
                 <FaChevronDown className={styles.profileDown} />
                 <div className={styles.dropdownMenu}>
-                    <div className={styles.dropdownItem}>Account</div>
+                    <div className={styles.dropdownItem} onClick={handleAccountClick}>Account</div>
                     <div className={styles.dropdownItem}>Projects</div>
                     <div className={styles.dropdownItem} onClick={handleLogout}>Logout</div>
                 </div>
