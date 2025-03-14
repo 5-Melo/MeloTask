@@ -12,6 +12,7 @@ import ProjectTemplate from "../projectTemplate/ProjectTemplate.tsx";
 import ProjectPage from '../projectsPage/ProjectPage.tsx'
 import IssuePopup from "../../components/issuePopup/IssuePopup.tsx";
 import GlobalContext from "../../Context/GlobalContext.tsx";
+import Header from "../../components/header/Header.tsx";
 
 export default function SideNavBar() {
     const navigate = useNavigate();
@@ -22,22 +23,7 @@ export default function SideNavBar() {
     return (
         <div className={styles["side-nav"]}>
             {popUp ? <IssuePopup create={true}/>:''}
-            <header className={styles["side-nav__header"]}>
-                <div className={styles["side-nav__logo"]}>
-                    <h2 className={styles["side-nav__logo-text"]}>MeloTask</h2>
-                    {/* <h1 className={styles["side-nav__title"]}>{activePage}</h1> */}
-                </div>
-                <div className={styles["side-nav__profile"]}>
-                    <div className={styles["side-nav__profile-main"]}>
-                        <RiAccountCircleLine className={styles["side-nav__profile-icon"]} />
-                        <div className={styles["side-nav__profile-info"]}>
-                            <span className={styles["side-nav__profile-name"]}>John Doe</span>
-                            <span className={styles["side-nav__profile-role"]}>Role</span>
-                        </div>
-                    </div>
-                    <FaChevronDown className={styles["side-nav__profile-down"]} />
-                </div>
-            </header>
+            <Header/>
 
             <div className={styles["side-nav__grid"]}>
                 <aside className={styles["side-nav__sidebar"]}>
