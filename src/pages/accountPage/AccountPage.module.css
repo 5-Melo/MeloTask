@@ -1,0 +1,101 @@
+.accountPage {
+  min-height: 100vh;
+  background-color: #fdebeb;
+}
+
+.wrapper {
+  padding: 40px;
+}
+
+
+
+.title {
+  font-size: 36px;
+  color: #2e2e2e;
+  margin-bottom: 20px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: fit-content;
+  margin: auto;
+}
+
+.sectionContent {
+  font-size: 16px;
+  color: #2e2e2e;
+
+}
+
+.sectionContent label{
+    margin-right: 10px;
+}
+
+.sectionContent input {
+    padding: 10px;
+    border: none;
+    /* border-bottom: 1px solid #ccc; */
+    background-color: #F5F5F5;
+    outline: none;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+    color: rgba(46, 46, 46, 0.762);
+}
+
+
+
+.section {
+    display: flex;
+    flex-direction: column;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sectionInputs {
+  font-size: 16px;
+  color: #2e2e2e;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  color: #2e2e2e;
+  margin-bottom: 50px;
+}
+
+.sectionContent {
+  font-size: 16px;
+  color: #2e2e2e;
+}
+
+
+
+.passwordChange {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.passwordChange h3{
+    margin-top: 30px;
+}
+
+.saveBtn {
+  background-color: #F38181;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 15px;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-top: 20px;
+  display: block;
+}
