@@ -28,7 +28,7 @@ export default function SideNavBar() {
 
             <div className={styles["side-nav__grid"]}>
                 <aside className={styles["side-nav__sidebar"]}>
-                    {location.pathname.startsWith('/dashboard/projects/') ? 
+                    {location.pathname.startsWith('/dashboard/project/') ? 
                     <div className={styles["side-nav__create-issue"]} onClick={()=>{setPopUp(true)}}>
                         <div className={styles["side-nav__create-icon"]}>
                             <span>+</span>

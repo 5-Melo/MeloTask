@@ -5,7 +5,7 @@ import { FaAngleLeft } from "react-icons/fa";
 import { FiEdit3 } from "react-icons/fi";
 import IssueDetail from '../issueDetail/IssueDetail.tsx';
 import styles from './IssuePopup.module.css'; 
-import GlobalContext from '../../Context/GlobalContext.tsx';
+import GlobalContext, { GlobalContextState } from '../../Context/GlobalContext.tsx';
 import { useParams } from 'react-router-dom';
 
 export default function IssuePopup({ create = false, taskid }) {
@@ -14,8 +14,8 @@ export default function IssuePopup({ create = false, taskid }) {
     const [title, setTitle] = useState('Issue Title');
     const [description, setDescription] = useState('Issue Description');
 
-    const { setPopUp } = useContext(GlobalContext)
-    const { projects } = useContext(GlobalContext)
+    const { setPopUp } = useContext(GlobalContext) as GlobalContextState
+    const { projects } = useContext(GlobalContext) as GlobalContextState
     const username = localStorage.getItem('username') || sessionStorage.getItem('username')
     const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId')
     const token = localStorage.getItem('token') || sessionStorage.getItem('token')
@@ -117,7 +117,7 @@ export default function IssuePopup({ create = false, taskid }) {
     }
 
     function backgroundClick(e: React.MouseEvent<HTMLDivElement>) {
-        if (e.target.className === styles['wrapper'])
+        if ((e.target as HTMLDivElement).className  === styles['wrapper'])
             setPopUp(false);
     }
 
@@ -151,8 +151,8 @@ export default function IssuePopup({ create = false, taskid }) {
     async function getmembers() {
         const project = projects.find((project) => project.id === projectId);
         if (project) {
-            const teamMembers = await Promise.all(
-                project.teamMembers.map(async (memberId) => {
+            const teamMembers:any = await Promise.all(
+                project.teamMemberIds.map(async (memberId) => {
                     const response = await fetch(`http://localhost:8080/api/users/${memberId}`, {
                         method: 'GET',
                         headers: { 'authorization': `Bearer ${token}` }
@@ -192,7 +192,7 @@ export default function IssuePopup({ create = false, taskid }) {
             await putTask(taskid, task);
         }
         else{
-        await postTask(task);
+            await postTask(task);
         }
     }
 

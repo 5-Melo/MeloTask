@@ -41,7 +41,7 @@ export default function ProjectPage() {
     <div className={styles['project-page']}>
       {projectModal?
       <div onClick={toggleCreateProject} className={styles['project-page__create-project']}>
-      <ProjectTemplate />
+      <ProjectTemplate onClose={() => setProjectModal(false)} />
       </div>
        :
         <></>
