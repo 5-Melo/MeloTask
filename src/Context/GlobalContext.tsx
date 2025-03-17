@@ -1,16 +1,19 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, Dispatch, SetStateAction } from 'react';
 
 // Import the Project type from a shared types file
 import { Project } from '../types/project';
+import { Status } from '../types/task';
 
 // Define the context state interface
 export interface GlobalContextState {
     popUp: boolean;
-    setPopUp: (value: boolean) => void;
+    setPopUp: Dispatch<SetStateAction<boolean>>;
     projects: Project[];
-    setProjects: (projects: Project[]) => void;
-    currentProject?: Project 
-    setCurrentProject: (project: Project) => void
+    setProjects: Dispatch<SetStateAction<Project[]>>;
+    currentProject?: Project;
+    setCurrentProject: Dispatch<SetStateAction<Project | undefined>>;
+    statuses: Status[];
+    setStatuses: Dispatch<SetStateAction<Status[]>>;
 }
 
 // Create the context with an initial undefined state
@@ -26,6 +29,7 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     // State for managing projects list
     const [projects, setProjects] = useState<Project[]>([]);
     const [currentProject, setCurrentProject] = useState<Project>();
+    const [statuses, setStatuses] = useState<Status[]>([]);
 
     // Create the context value object with proper typing
     const contextValue: GlobalContextState = {
@@ -34,7 +38,9 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         projects,
         setProjects,
         currentProject,
-        setCurrentProject
+        setCurrentProject,
+        statuses,
+        setStatuses,
     };
 
     return (

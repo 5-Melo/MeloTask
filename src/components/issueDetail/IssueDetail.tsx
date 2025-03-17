@@ -13,37 +13,56 @@ interface IssueDetailProps {
     color?: boolean;
     add?: boolean;
     labelcreate?: boolean;
-    colors?: (string | null)[];
-
+    colors?: string[];
 }
 
-export default function IssueDetail({ title = "Title", attributes = [], setAttributes, options = [], avatar = false, add = false, labelcreate = false, colors }: IssueDetailProps) {
-
+const IssueDetail: React.FC<IssueDetailProps> = ({
+    title,
+    attributes,
+    setAttributes,
+    options,
+    avatar = false,
+    color = false,
+    add = false,
+    labelcreate = false,
+    colors = []
+}) => {
     const [addingFields, setAddingFields] = useState(false);
     const [newAttribute, setNewAttribute] = useState<string | null>(null);
     const [creaingLabel, setCreatingLabel] = useState(false);
     const [newLabel, setNewLabel] = useState('');
     const [labelColor, setLabelColor] = useState('#000000');
 
-    const { id: projectId } = useParams();
-    const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId')
+    const { id: projectId } = useParams<{ id: string }>();
+    const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
 
-    function handleAddButton() {
+    const handleClick = (option: string) => {
+        if (!setAttributes) return;
+        
+        setAttributes(prev => {
+            const newAttributes = [...prev];
+            const index = newAttributes.indexOf(null);
+            if (index !== -1) {
+                newAttributes[index] = option;
+            }
+            return newAttributes;
+        });
+    };
 
+    const handleAddButton = () => {
         setAddingFields(!addingFields);
         setCreatingLabel(false);
-    }
-    // console.log(options);
+    };
 
-    function handleAddAttribute() {
+    const handleAddAttribute = () => {
         if (newAttribute && setAttributes) {
             setAttributes([...attributes, newAttribute]);
             setNewAttribute(null);
             setAddingFields(false);
         }
-    }
+    };
 
-    function getAttributes() {
+    const getAttributes = () => {
         return attributes.map((attribute, index) => {
             return avatar ? (
                 <div key={index} className={styles["issue-detail__avatar"]}>
@@ -51,15 +70,18 @@ export default function IssueDetail({ title = "Title", attributes = [], setAttri
                     <span className={styles["issue-detail__avatar-name"]}>{attribute}</span>
                 </div>
             ) : (
-                <div style={{ backgroundColor: `${colors[index]}90` }} key={index} className={styles["issue-detail__attribute"]}>
-                    {/* {color ? <div className={styles["issue-detail__color-indicator"]}></div> : null} */}
+                <div 
+                    style={{ backgroundColor: colors?.[index] ? `${colors[index]}90` : undefined }} 
+                    key={index} 
+                    className={styles["issue-detail__attribute"]}
+                >
                     <span className={styles["issue-detail__attribute-text"]}>{attribute}</span>
                 </div>
             );
         });
-    }
+    };
 
-    async function handleCreateLabel() {
+    const handleCreateLabel = async () => {
         if (newLabel && labelColor) {
             try {
                 const response = await fetch(`http://localhost:8080/api/users/${userId}/projects/${projectId}/labels`, {
@@ -79,40 +101,42 @@ export default function IssueDetail({ title = "Title", attributes = [], setAttri
                 setLabelColor('#000000');
                 setCreatingLabel(false);
             } catch (err) {
-                console.log(err);
+                console.error('Error creating label:', err);
             }
         }
-    }
+    };
 
     return (
         <div className={styles["issue-detail"]}>
             <h4 className={styles["issue-detail__title"]}>{title}</h4>
             <div className={styles["issue-detail__content"]}>
                 {getAttributes()}
-                {add ? (
+                {add && (
                     <div className={styles["issue-detail__add-container"]}>
                         <div
                             className={`${styles["issue-detail__addFields"]} ${addingFields ? styles["issue-detail__addFields--visible"] : ""}`}
                         >
-                            {
-                                creaingLabel ? (
-                                    <>
-                                        <input
-                                            type="color"
-                                            className={styles["issue-detail__color-picker"]}
-                                            value={labelColor}
-                                            onChange={(e) => setLabelColor(e.target.value)}
-                                        />
-                                        <input
-                                            type="text"
-                                            className={styles["issue-detail__input"]}
-                                            value={newLabel}
-                                            onChange={(e) => setNewLabel(e.target.value)}
-                                            placeholder="New label"
-                                        />
-                                        <button className={styles["issue-detail__submit"]} onClick={handleCreateLabel}>Create</button>
-                                    </>
-                                ) : <>
+                            {creaingLabel ? (
+                                <>
+                                    <input
+                                        type="color"
+                                        className={styles["issue-detail__color-picker"]}
+                                        value={labelColor}
+                                        onChange={(e) => setLabelColor(e.target.value)}
+                                    />
+                                    <input
+                                        type="text"
+                                        className={styles["issue-detail__input"]}
+                                        value={newLabel}
+                                        onChange={(e) => setNewLabel(e.target.value)}
+                                        placeholder="New label"
+                                    />
+                                    <button className={styles["issue-detail__submit"]} onClick={handleCreateLabel}>
+                                        Create
+                                    </button>
+                                </>
+                            ) : (
+                                <>
                                     <select
                                         className={styles["issue-detail__select"]}
                                         value={newAttribute || ""}
@@ -125,18 +149,29 @@ export default function IssueDetail({ title = "Title", attributes = [], setAttri
                                             </option>
                                         ))}
                                     </select>
-                                    <button className={styles["issue-detail__submit"]} onClick={handleAddAttribute}>Add</button>
-                                    {labelcreate ? <button onClick={() => { setCreatingLabel(true) }} className={styles["issue-detail__submit"]}>New</button> : null}
+                                    <button className={styles["issue-detail__submit"]} onClick={handleAddAttribute}>
+                                        Add
+                                    </button>
+                                    {labelcreate && (
+                                        <button 
+                                            onClick={() => setCreatingLabel(true)} 
+                                            className={styles["issue-detail__submit"]}
+                                        >
+                                            New
+                                        </button>
+                                    )}
                                 </>
-                            }
+                            )}
                         </div>
 
                         <div onClick={handleAddButton} className={styles["issue-detail__add"]}>
                             <FaPlus className={styles["issue-detail__add-icon"]} />
                         </div>
                     </div>
-                ) : null}
+                )}
             </div>
         </div>
     );
-}
+};
+
+export default IssueDetail;

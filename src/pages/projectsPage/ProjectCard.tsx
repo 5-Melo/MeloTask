@@ -13,13 +13,14 @@ export default function ProjectCard({project}:ProjectCardProps) {
   const token = localStorage.getItem('token') || sessionStorage.getItem('token');
   const navigate = useNavigate();
 
-  const {setCurrentProject} = useContext(GlobalContext) as GlobalContextState
   function navProjectPage(e)
   {
     console.log(e.target.tagName);
-    if(e.target.tagName !== "BUTTON")
-    setCurrentProject(project);
+   
+    sessionStorage.setItem('currentProject', JSON.stringify(project));
     navigate(`/dashboard/project/${project.id}`)
+      
+
     
   }
 

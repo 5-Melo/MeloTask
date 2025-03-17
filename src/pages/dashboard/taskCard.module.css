@@ -1,18 +1,17 @@
 .container {
     width: 350px;
-    height: 160px;
+    min-height: 160px;
     background-color: white;
     border-radius: 1rem;
     display:flex;
-    flex-wrap: wrap;
     flex-direction: column;
+    justify-content: center;
     padding: 1rem;
     position: relative;
     cursor: grab;
     user-select:none;
     transition: 0.7s all ease-out;
-    transform: translateY();
-    
+  
 }
 .container:active{
     cursor:grabbing;
@@ -20,6 +19,8 @@
 }
 .upperSection {
     position: relative;
+    display: flex;
+    justify-content: space-between;
 }
 .dotList {
     display: flex;
@@ -35,9 +36,7 @@
     cursor: auto;
     transition: 0.3s all;
 }
-.buttonDiv {
-
-    padding:  0 0.5rem;
+.trashDiv {
     cursor: pointer;
 }
 .dotListDiv {
@@ -78,24 +77,15 @@
 .dependency {
     text-align: center;
 }
-.priority {
+.label {
     padding: .1rem .5rem;
     border-radius: 2rem;
     width: fit-content;
+    height: fit-content;
     text-transform: capitalize;
+
 }
-.lowP{
-    color: #D58D49;
-    background-color:rgba(213, 142, 20, 0.2);
-}
-.mediumP{
-color: #d56a49;
-    background-color: rgba(213, 106, 73, 0.2);
-}
-.highP{
-color: #d54949;
-    background-color: rgba(213, 73, 73, 0.2);
-}
+
 
 .middleSection {
     display: flex;
@@ -109,3 +99,18 @@ color: #d54949;
 .dependency {
     color: #787486;
 }
+
+.labels-group {
+    display: flex;
+}
+
+.loading-spinner-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    font-size: 3rem;
+}
+

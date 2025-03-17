@@ -18,18 +18,19 @@ import { Project } from "../../types/project.ts";
 export default function SideNavBar() {
     const navigate = useNavigate();
     const location = useLocation();
-    const {popUp, setPopUp, currentProject} = useContext(GlobalContext) as GlobalContextState
-   
-
+    const {popUp, setPopUp} = useContext(GlobalContext) as GlobalContextState
+    const currentProject = sessionStorage.getItem('currentProject')
+    ? JSON.parse(sessionStorage.getItem('currentProject')!) as Project 
+    : null;
     return (
         <div className={styles["side-nav"]}>
-            {popUp ? <IssuePopup create={true}/>:''}
+            {popUp ? <IssuePopup create={true} taskid={''}/>:''}
             <Header/>
 
             <div className={styles["side-nav__grid"]}>
                 <aside className={styles["side-nav__sidebar"]}>
                     {location.pathname.startsWith('/dashboard/project/') ? 
-                    <div className={styles["side-nav__create-issue"]} onClick={()=>{setPopUp(true)}}>
+                    <div className={styles["side-nav__create-issue"]} onClick={()=>{sessionStorage.removeItem('openedTaskId');setPopUp(true)}}>
                         <div className={styles["side-nav__create-icon"]}>
                             <span>+</span>
                         </div>
