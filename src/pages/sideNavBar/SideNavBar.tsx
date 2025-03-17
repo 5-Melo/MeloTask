@@ -11,24 +11,26 @@ import Dashboard from "../dashboard/Dashboard.tsx";
 import ProjectTemplate from "../projectTemplate/ProjectTemplate.tsx";
 import ProjectPage from '../projectsPage/ProjectPage.tsx'
 import IssuePopup from "../../components/issuePopup/IssuePopup.tsx";
-import GlobalContext from "../../Context/GlobalContext.tsx";
+import GlobalContext, { GlobalContextState } from "../../Context/GlobalContext.tsx";
 import Header from "../../components/header/Header.tsx";
+import { Project } from "../../types/project.ts";
 
 export default function SideNavBar() {
     const navigate = useNavigate();
     const location = useLocation();
-    const {popUp, setPopUp} = useContext(GlobalContext)
-
-
+    const {popUp, setPopUp} = useContext(GlobalContext) as GlobalContextState
+    const currentProject = sessionStorage.getItem('currentProject')
+    ? JSON.parse(sessionStorage.getItem('currentProject')!) as Project 
+    : null;
     return (
         <div className={styles["side-nav"]}>
-            {popUp ? <IssuePopup create={true}/>:''}
+            {popUp ? <IssuePopup create={true} taskid={''}/>:''}
             <Header/>
 
             <div className={styles["side-nav__grid"]}>
                 <aside className={styles["side-nav__sidebar"]}>
-                    {location.pathname.startsWith('/dashboard/projects/') ? 
-                    <div className={styles["side-nav__create-issue"]} onClick={()=>{setPopUp(true)}}>
+                    {location.pathname.startsWith('/dashboard/project/') ? 
+                    <div className={styles["side-nav__create-issue"]} onClick={()=>{sessionStorage.removeItem('openedTaskId');setPopUp(true)}}>
                         <div className={styles["side-nav__create-icon"]}>
                             <span>+</span>
                         </div>
@@ -47,10 +49,10 @@ export default function SideNavBar() {
                         </div>}
                     <nav className={styles["side-nav__nav"]}>
                         <ul className={styles["side-nav__nav-list"]}>
-                            <li className={`${styles["side-nav__nav-item"]} ${location.pathname.startsWith('/dashboard/projects')? styles["side-nav__nav-item--active"]:''}`} onClick={()=>{navigate('/dashboard/projects')}}><RxDashboard /><span className={styles["side-nav__nav-name"]}>Dashboard</span></li>
+                            <li className={`${styles["side-nav__nav-item"]} ${location.pathname.startsWith(`/dashboard/project/${currentProject?.id}`)? styles["side-nav__nav-item--active"]:''}`} onClick={()=>{navigate(`/dashboard/project/${currentProject?.id}`)}}><RxDashboard /><span className={styles["side-nav__nav-name"]}>Dashboard</span></li>
                             <li className={`${styles["side-nav__nav-item"]}`}><FaListCheck /><span className={styles["side-nav__nav-name"]}>Backlog</span></li>
                             <li className={`${styles["side-nav__nav-item"]}`}><FaRegClock /><span className={styles["side-nav__nav-name"]}>Gantt Chart</span></li>
-                            <li className={`${styles["side-nav__nav-item"]} ${location.pathname === '/dashboard/createProject' ? styles["side-nav__nav-item--active"] : ''}`} onClick={() => { navigate('/dashboard/createProject') }}> <GoStack /><span className={styles["side-nav__nav-name"]}>Project Template</span></li>
+                            <li className={`${styles["side-nav__nav-item"]} ${location.pathname === '/dashboard/createProject' ? styles["side-nav__nav-item--active"] : ''}`} onClick={() => { navigate('/dashboard/projectSettings') }}> <GoStack /><span className={styles["side-nav__nav-name"]}>Project Settings</span></li>
                         </ul>
                     </nav>
                 </aside>

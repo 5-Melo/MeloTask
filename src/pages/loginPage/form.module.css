@@ -78,7 +78,7 @@
     gap:1rem;
     text-transform: capitalize;
 }
-.submit input[type='submit'] {
+.submit Button[type='submit'] {
     width: 100%;
     font-weight: bold;
     background-color: #F38181;

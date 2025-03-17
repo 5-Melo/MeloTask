@@ -19,7 +19,7 @@ const Form: React.FC<props> = ({ parentStyles }) => {
     
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState<string>('');
-    const [checkbox, setCheckbox] = useState<string>(false);
+    const [checkbox, setCheckbox] = useState<boolean>(false);
     const [passwordField,setPasswordField] = useState('password');
 
     async function handleClick(e)
@@ -46,7 +46,7 @@ const Form: React.FC<props> = ({ parentStyles }) => {
             checkbox ? localStorage.setItem('userId', payload.userId) : sessionStorage.setItem('userId', payload.userId)
             checkbox ? localStorage.setItem('username', payload.sub) : sessionStorage.setItem('username', payload.sub)
 
-            navigate('/dashboard')            
+            navigate('/projects')            
         }
         else
         {

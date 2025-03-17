@@ -1,30 +1,35 @@
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { RiAccountCircleLine } from "react-icons/ri";
 import styles from './ProjectTemplate.module.css';
-import GlobalContext from '../../Context/GlobalContext.tsx';
-import { useEffect } from 'react';
+import GlobalContext, { GlobalContextState } from '../../Context/GlobalContext.tsx';
+import { TeamMemberId } from '../../types/project.ts';
 
-export default function ProjectTemplate(projectid) {
+interface ProjectTemplateProps {
+    isEditMode?: boolean;
+    onClose?: () => void;
+}
+
+export default function ProjectTemplate({ isEditMode = false, onClose }: ProjectTemplateProps) {
     const [projectName, setProjectName] = useState('');
-    const [status, setStatus] = useState('notStarted');
+    const [status, setStatus] = useState('IN_PROGRESS');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [description, setDescription] = useState('');
     const [username, setUsername] = useState('');
     const [usernames, setUsernames] = useState([]);
     const [selectedUsername, setSelectedUsername] = useState(null);
-    const [teamMembers, setTeamMembers] = useState([]);
-
+    const [teamMembers, setTeamMembers] = useState<TeamMemberId[]>([]);
+    const {currentProject, projects, setProjects} = useContext(GlobalContext) as GlobalContextState
+    const projectid = currentProject?.id;
     const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-    const {projects} = useContext(GlobalContext);
-
 
     useEffect(() => {
         if(!projectid) return;
+        
         const project = projects.find(proj => proj.id === projectid);
         if (project) {
             setProjectName(project.title);
@@ -32,25 +37,51 @@ export default function ProjectTemplate(projectid) {
             setStartDate(project.startDate);
             setEndDate(project.endDate);
             setDescription(project.description);
-            setTeamMembers(project.teamMembers);
+            setTeamMembers(project.teamMemberIds);
         }
     }, [projectid, projects]);
 
     async function saveProject(projectData) {
-        const projectPostUrl = `http://localhost:8080/api/users/${userId}/projects`;
-        const response = await fetch(projectPostUrl, { method: 'POST', headers: { 'authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(projectData) });
-        if (response.ok) {
-            toast.success('Project Created Successfully');
-        } else {
-            toast.error('Project Creation Failed');
-        }
-        console.log(response);
+        const url = isEditMode 
+            ? `http://localhost:8080/api/users/${userId}/projects/${projectid}`
+            : `http://localhost:8080/api/users/${userId}/projects`;
+            
+        const method = isEditMode ? 'PUT' : 'POST';
+        
+        const response = await fetch(url, { 
+            method, 
+            headers: { 
+                'authorization': `Bearer ${token}`, 
+                'Content-Type': 'application/json' 
+            }, 
+            body: JSON.stringify(projectData) 
+        });
 
-        const data = await response.json();
-        return data.id;
+        if (response.ok) {
+            const data = await response.json();
+            toast.success(isEditMode ? 'Project Updated Successfully' : 'Project Created Successfully');
+            
+            // Update projects array in context
+            if (isEditMode) {
+                setProjects(projects.map(project => 
+                    project.id === projectid ? data : project
+                ));
+            } else {
+                setProjects([...projects, data]);
+            }
+            
+            // Close the modal after successful operation
+            onClose?.();
+            return data.id;
+        } else {
+            toast.error(isEditMode ? 'Project Update Failed' : 'Project Creation Failed');
+            return null;
+        }
     }
 
     async function makeStatuses(id) {
+        if (isEditMode) return; // Don't create statuses for existing projects
+        
         const projectStatusesUrl = `http://localhost:8080/api/users/${userId}/projects/${id}/statuses`;
         const statuses = { name: 'Free', color: 'green' };
         const statuses2 = { name: 'In Progress', color: 'orange' };
@@ -70,14 +101,33 @@ export default function ProjectTemplate(projectid) {
             description,
             teamMembers: teamMembers.map(member => member.id)
         };
-
+        
         const id = await saveProject(projectData);
-        console.log(id);
-
-        await makeStatuses(id);
-        console.log('Project Data:', projectData);
-        // Add your save logic here
+        if (!isEditMode) {
+            await makeStatuses(id);
+        }
     };
+
+    async function handleDelete() {
+        if (!projectid) return;
+        
+        try {
+            const response = await fetch(`http://localhost:8080/api/users/${userId}/projects/${projectid}`, {
+                method: 'DELETE',
+                headers: { 'authorization': `Bearer ${token}` }
+            });
+            
+            if (response.ok) {
+                toast.success('Project Deleted Successfully');
+                // Update projects array by removing the deleted project
+                setProjects(projects.filter(project => project.id !== projectid));
+            } else {
+                toast.error('Project Deletion Failed');
+            }
+        } catch (error) {
+            toast.error('Failed to delete project');
+        }
+    }
 
     function handleAddMember() {
         if (selectedUsername) {
@@ -87,10 +137,11 @@ export default function ProjectTemplate(projectid) {
         console.log('Add member:', selectedUsername);
     }
 
-    const handleUsernameChange = async (inputValue: string) => {
+    const handleUsernameChange = (inputValue) => {
         console.log(inputValue);
+        setUsername(inputValue);
 
-        await setUsername(inputValue);
+        const getSet = async() => {
         if (inputValue.length >= 3) {
             const response = await fetch(`http://localhost:8080/api/users/search?prefix=${inputValue}`, {
                 headers: { 'authorization': `Bearer ${token}` }
@@ -99,12 +150,16 @@ export default function ProjectTemplate(projectid) {
             setUsernames(data.map(user => ({ value: user.username, label: user.username, id: user.id })));
             console.log('User data:', data);
         }
+        }
+        getSet();
     };
 
     return (
         <div className={styles['project-template']}>
             <ToastContainer />
-            <h1 className={styles['project-template__header']}>Shape your projects to success!</h1>
+            <h1 className={styles['project-template__header']}>
+                {isEditMode ? 'Edit Project' : 'Shape your projects to success!'}
+            </h1>
             <form className={styles['project-template__form']} onSubmit={handleSave}>
                 <div className={styles['project-template__grid']}>
                     <div className={styles['project-template__form-group']}>
@@ -126,7 +181,6 @@ export default function ProjectTemplate(projectid) {
                             value={status}
                             onChange={(e) => setStatus(e.target.value)}
                         >
-                            <option value="notStarted">Not Started</option>
                             <option value="IN_PROGRESS">In Progress</option>
                             <option value="DONE">Completed</option>
                         </select>
@@ -164,7 +218,7 @@ export default function ProjectTemplate(projectid) {
                         <CreatableSelect
                             className={styles['project-template__members-select']}
                             isClearable
-                            onInputChange={(e) => { handleUsernameChange(e) }}
+                            onInputChange={handleUsernameChange}
                             onChange={setSelectedUsername}
                             options={usernames}
                             placeholder="Enter or select a username"
@@ -183,7 +237,19 @@ export default function ProjectTemplate(projectid) {
                         onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                 </div>
-                <button type="submit" className={styles['project-template__button']}>Save</button>
+                <div className={styles['project-template__button-group']}>
+                    <button 
+                        type='button' 
+                        onClick={handleDelete} 
+                        disabled={!isEditMode} 
+                        className={`${styles['project-template__button']}`}
+                    >
+                        Delete
+                    </button>
+                    <button type="submit" className={styles['project-template__button']}>
+                        {isEditMode ? 'Update' : 'Create'}
+                    </button>
+                </div>
             </form>
         </div>
     );

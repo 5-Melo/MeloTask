@@ -8,6 +8,8 @@
     background-color: white;
     border-radius: 1rem;
     padding: 2rem;
+    
+
 }
 
 .pageCard__container {
@@ -16,12 +18,16 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
 }
 
 .pageCard__heading {
     font-size: 2.5rem;
     text-align: center;
     padding: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .pageCard__leaveButton {
     align-self: flex-end;

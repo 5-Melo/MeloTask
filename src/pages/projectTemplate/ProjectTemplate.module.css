@@ -122,3 +122,7 @@
   background-color: #ccc;
   cursor: not-allowed;
 }
+.project-template__button-group {
+  display: flex;
+  justify-content: space-between;
+}

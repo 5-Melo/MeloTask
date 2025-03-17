@@ -1,18 +1,20 @@
 import React, { useEffect,useState , useContext} from 'react'
 import ProjectCard from './ProjectCard.tsx'
 import styles from './projectPage.module.css'
-import { FiPlus } from "react-icons/fi";
 import { useNavigate, Outlet } from 'react-router-dom';
-import GlobalContext from '../../Context/GlobalContext.tsx';
-
-
+import GlobalContext, { GlobalContextState } from '../../Context/GlobalContext.tsx';
+import ProjectTemplate from '../projectTemplate/ProjectTemplate.tsx';
+import Header from '../../components/header/Header.tsx';
+import { AiOutlineLoading } from "react-icons/ai";
 
 export default function ProjectPage() {
+      const [projectModal, setProjectModal] = useState(false)
       const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
       const token = localStorage.getItem('token') || sessionStorage.getItem('token');
       const navigate = useNavigate();
+      const [loading, setLoading] = useState(true);
       // let projects = []
-      const {projects ,setProjects} = useContext(GlobalContext);
+      const {projects ,setProjects} = useContext(GlobalContext) as GlobalContextState;
 
       useEffect(() => {
 
@@ -26,27 +28,59 @@ export default function ProjectPage() {
                   const data = await response.json();
                   console.log(data);
                   setProjects(data);
+                  setLoading(false);
             })()
+
       },[])
 
+
+      function toggleCreateProject(e)
+      {
+            if (e.target.className === styles['project-page__create-project'] || e.target.className === styles['project-page__content__header__button'])
+            setProjectModal(!projectModal)
+      }
+
   return (
-    <div className={styles.projectPage}>
-
-       <div className={styles.createProject} style={{'cursor':'pointer'}} onClick={()=>{navigate('/dashboard/createProject')}}>
-            <span className={styles.createProject__plus}>
-                  <FiPlus/>      
-            </span>
-       </div>
-       {
-            projects.map((project)=>{
-                  return(
-                        <ProjectCard
-                        project={project}
-                        />
+    <div className={styles['project-page']}>
+      {projectModal?
+      <div onClick={toggleCreateProject} className={styles['project-page__create-project']}>
+      <ProjectTemplate onClose={() => setProjectModal(false)} />
+      </div>
+       :
+        <></>
+      }
+       <Header/>
+       <div className={styles['project-page__content']}>
+            {
+                  loading ? 
+                  (
+                        <div className={styles['loading-spinner-div']}>
+                              <AiOutlineLoading className='loading-spinner' />
+                        </div>
                   )
+                  :
+                  (
+                        <>
+                        <div className={styles['project-page__content__header']}>
+                              <h1>Projects</h1>
+                              <button onClick={toggleCreateProject} className={styles['project-page__content__header__button']}>Create Project</button>
+                        </div>
 
-            })
-       }
+                        <div className={styles['project-page__content__projects']}>
+                              {
+                                    projects.map((project) => {
+                                          return(
+                                                <ProjectCard
+                                                key={project.id}
+                                                project={project}
+                                                /> 
+                                          )
+                                    })
+                              }
+                        </div>
+                         </>)
+            }
+      </div>
     </div>
   )
 }
